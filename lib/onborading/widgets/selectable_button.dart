@@ -14,13 +14,14 @@ class SelectableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-/*     print(
-        "[in SelectableInterestTile widget] title = $title, \tselected=$selected"); */
+    /* print(
+        "[in SelectableInterestTile widget] title = $title,tselected=$selected"); */
 
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        margin: const EdgeInsets.all(Sizes.size5),
+        //margin: const EdgeInsets.all(Sizes.size5),
+
         alignment: Alignment.bottomLeft,
         duration: const Duration(microseconds: 300),
         padding: const EdgeInsetsDirectional.symmetric(
@@ -35,7 +36,7 @@ class SelectableButton extends StatelessWidget {
           ),
         ),
         child: Text(
-          textAlign: TextAlign.left,
+          textAlign: TextAlign.center,
           title,
           style: TextStyle(
             fontSize: Sizes.size16,

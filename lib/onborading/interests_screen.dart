@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/onborading/detail_interests_screen.dart';
-import 'package:twitter_clone_2025/onborading/widgets/selectable_button.dart';
 import 'package:twitter_clone_2025/onborading/widgets/selectable_interest_tile.dart';
 import 'package:twitter_clone_2025/witgets/form_button.dart';
 
@@ -73,6 +72,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => DetailInterestsScreen(
+            interests: interests,
             selectedInterests: _selectedInterets,
           ),
         ));

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
-import 'package:twitter_clone_2025/features/password_screen.dart';
-import 'package:twitter_clone_2025/features/sign_up_screen.dart';
-import 'package:twitter_clone_2025/onborading/detail_interests_screen.dart';
 import 'package:twitter_clone_2025/onborading/interests_screen.dart';
 
 /*
@@ -13,6 +10,7 @@ Framework • revision 80c2e84975 (6 months ago) • 2024-07-30 23:06:49 +0700
 Engine • revision b8800d88be
 Tools • Dart 3.5.0 • DevTools 2.37.2
 */
+//https://imgur.com/Lr5lksD
 void main() {
   runApp(const TwitterClone2025());
 }
@@ -113,7 +111,7 @@ class TwitterClone2025 extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const SignUpScreen(),
+      home: const InterestsScreen(),
     );
   }
 }
