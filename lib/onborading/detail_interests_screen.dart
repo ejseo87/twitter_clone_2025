@@ -396,6 +396,7 @@ class _DetailInterestsScreenState extends State<DetailInterestsScreen> {
             for (var index = 0; index < detailInterests.length; index++)
               FittedBox(
                 child: SelectableButton(
+                  buttonType: SelectableBtnType.oval,
                   title: detailInterests[index],
                   onTap: () => checkSelected(
                     index: index,
