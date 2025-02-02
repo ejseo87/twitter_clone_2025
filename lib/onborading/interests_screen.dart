@@ -4,7 +4,6 @@ import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/onborading/detail_interests_screen.dart';
 import 'package:twitter_clone_2025/onborading/widgets/selectable_button.dart';
-import 'package:twitter_clone_2025/onborading/widgets/selectable_interest_tile.dart';
 import 'package:twitter_clone_2025/witgets/form_button.dart';
 
 const interests = [
@@ -33,31 +32,7 @@ class InterestsScreen extends StatefulWidget {
 
 class _InterestsScreenState extends State<InterestsScreen> {
   final List<String> _selectedInterets = [];
-  /* 
-  final ScrollController _scrollController = ScrollController();
-  bool _showTitle = false;
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_onScroll);
-  }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-  void _onScroll() {
-    if (_scrollController.offset > 150) {
-      if (_showTitle) return;
-      _showTitle = true;
-      setState(() {});
-    } else {
-      _showTitle = false;
-      setState(() {});
-    }
-  }
- */
   void checkSelected(int index) {
     if (_selectedInterets.contains(interests[index])) {
       _selectedInterets.remove(interests[index]);
@@ -73,6 +48,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => DetailInterestsScreen(
+            interests: interests,
             selectedInterests: _selectedInterets,
           ),
         ));
@@ -127,7 +103,8 @@ class _InterestsScreenState extends State<InterestsScreen> {
                 childAspectRatio: 2 / 1,
                 children: [
                   for (var index = 0; index < interests.length; index++)
-                    SelectableInterestTile(
+                    SelectableButton(
+                      buttonType: SelectableBtnType.rectangle,
                       onTap: () => checkSelected(index),
                       title: interests[index],
                       selected: _selectedInterets.contains(interests[index]),
