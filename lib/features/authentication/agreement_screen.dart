@@ -130,10 +130,13 @@ class _AgreementScreenState extends State<AgreementScreen> {
         ),
         child: GestureDetector(
           onTap: _onNextTap,
-          child: FormButton(
-            disabled: !agreed,
-            text: "Next",
-            buttonType: ButtonType.big,
+          child: Hero(
+            tag: "agreementBtn",
+            child: FormButton(
+              disabled: !agreed,
+              text: "Next",
+              buttonType: ButtonType.big,
+            ),
           ),
         ),
         /* AnimatedContainer(

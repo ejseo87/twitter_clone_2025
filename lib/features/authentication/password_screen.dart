@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
-import 'package:twitter_clone_2025/onborading/interests_screen.dart';
+import 'package:twitter_clone_2025/features/onborading/interests_screen.dart';
 import 'package:twitter_clone_2025/witgets/form_button.dart';
 
 class PasswordScreen extends StatefulWidget {

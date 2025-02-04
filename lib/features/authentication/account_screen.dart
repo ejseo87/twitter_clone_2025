@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/features/agreement_screen.dart';
-import 'package:twitter_clone_2025/features/confirmation_code_screen.dart';
+import 'package:twitter_clone_2025/features/authentication/agreement_screen.dart';
+import 'package:twitter_clone_2025/features/authentication/confirmation_code_screen.dart';
 import 'package:twitter_clone_2025/witgets/form_button.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -110,10 +110,13 @@ class _AccountScreenState extends State<AccountScreen> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: SvgPicture.asset(
-            "assets/images/twitter-color-svgrepo-com.svg",
-            width: 30,
-            height: 30,
+          title: Hero(
+            tag: "twitterLogo",
+            child: SvgPicture.asset(
+              "assets/images/twitter-color-svgrepo-com.svg",
+              width: 30,
+              height: 30,
+            ),
           ),
           leading: GestureDetector(
             onTap: () => Navigator.pop(context),
@@ -353,10 +356,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     Gaps.v20,
                     GestureDetector(
                       onTap: _onSignUpTap,
-                      child: FormButton(
-                        disabled: false,
-                        text: "Sign up",
-                        buttonType: ButtonType.big,
+                      child: Hero(
+                        tag: "signUpBtn",
+                        child: FormButton(
+                          disabled: false,
+                          text: "Sign up",
+                          buttonType: ButtonType.big,
+                        ),
                       ),
                     ),
                   ],
@@ -376,10 +382,13 @@ class _AccountScreenState extends State<AccountScreen> {
                           : Container(),
                       GestureDetector(
                         onTap: _onNextTap,
-                        child: FormButton(
-                          disabled: !_isFormValid(),
-                          text: "Next",
-                          buttonType: ButtonType.small,
+                        child: Hero(
+                          tag: "agreementBtn",
+                          child: FormButton(
+                            disabled: !_isFormValid(),
+                            text: "Next",
+                            buttonType: ButtonType.small,
+                          ),
                         ),
                       ),
                     ],

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
-import 'package:twitter_clone_2025/features/password_screen.dart';
+import 'package:twitter_clone_2025/features/authentication/password_screen.dart';
 import 'package:twitter_clone_2025/witgets/form_button.dart';
 
 class ConfirmationCodeScreen extends StatefulWidget {
@@ -163,10 +163,13 @@ class _ConfirmationCodeScreenState extends State<ConfirmationCodeScreen> {
               Gaps.v10,
               GestureDetector(
                 onTap: _onNextTap,
-                child: FormButton(
-                  disabled: !_validCode,
-                  text: "Next",
-                  buttonType: ButtonType.big,
+                child: Hero(
+                  tag: "signUpBtn",
+                  child: FormButton(
+                    disabled: !_validCode,
+                    text: "Next",
+                    buttonType: ButtonType.big,
+                  ),
                 ),
               ),
               /* AnimatedContainer(

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/features/account_screen.dart';
-import 'package:twitter_clone_2025/features/login_screen.dart';
+import 'package:twitter_clone_2025/features/authentication/account_screen.dart';
+import 'package:twitter_clone_2025/features/authentication/login_screen.dart';
 import 'package:twitter_clone_2025/witgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -34,10 +34,13 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: SvgPicture.asset(
-          "assets/images/twitter-color-svgrepo-com.svg",
-          width: 30,
-          height: 30,
+        title: Hero(
+          tag: "twitterLogo",
+          child: SvgPicture.asset(
+            "assets/images/twitter-color-svgrepo-com.svg",
+            width: 30,
+            height: 30,
+          ),
         ),
       ),
       body: Padding(

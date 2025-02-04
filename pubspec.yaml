@@ -38,6 +38,8 @@ dependencies:
   font_awesome_flutter: 10.3.0
   flutter_svg: ^2.0.17
   shared_preferences: ^2.2.3
+  faker: ^2.2.0
+  youtube_player_flutter: ^9.1.1
 
 dev_dependencies:
   flutter_test:
