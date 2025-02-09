@@ -1,9 +1,12 @@
+import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/features/main_navigation/home_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/nav_tab.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/stf_screen.dart';
+import 'package:twitter_clone_2025/features/main_navigation/widgets/write_sheet.dart';
+import 'package:twitter_clone_2025/features/search/search_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -13,7 +16,9 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
+
+  final _fakeData = faker.Faker();
 
   void _onTap(int index) {
     setState(() {
@@ -21,16 +26,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     });
   }
 
-  void _onPostVideoButtonTap() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: const Text("Record a video"),
-          ),
-        ),
-        fullscreenDialog: true,
+  void _showWriteBottomSheet(BuildContext context, int index) async {
+    /*    setState(() {
+      _selectedIndex = index;
+    }); */
+    await showModalBottomSheet(
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => WriteSheet(
+        url: _fakeData.image.loremPicsum(),
+        text: "jane_mobbin",
       ),
     );
   }
@@ -38,11 +44,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            child: HomeScreen(),
+            child: const HomeScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
@@ -81,14 +88,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 selectedIcon: FontAwesomeIcons.solidCompass,
                 text: "Discover",
                 isSelected: _selectedIndex == 1,
-                onTap: () => _onTap(1),
+                onTap: () => const SearchScreen(),
               ),
               NavTab(
                 icon: FontAwesomeIcons.penToSquare,
                 selectedIcon: FontAwesomeIcons.solidPenToSquare,
                 text: "Inbox",
-                isSelected: _selectedIndex == 3,
-                onTap: () => _onTap(2),
+                isSelected: _selectedIndex == 2,
+                onTap: () => _showWriteBottomSheet(context, 2),
               ),
               NavTab(
                 icon: FontAwesomeIcons.heart,

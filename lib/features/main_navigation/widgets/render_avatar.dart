@@ -1,25 +1,23 @@
-import 'dart:math';
-import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 
 class RenderAvatar extends StatelessWidget {
   final double radius;
-  RenderAvatar({
+  final String url;
+  final String text;
+  const RenderAvatar({
     super.key,
     required this.radius,
+    required this.url,
+    required this.text,
   });
 
-  final random = Random().nextInt(300);
-  final myFaker = faker.Faker();
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: radius,
       backgroundColor: Theme.of(context).primaryColor,
-      foregroundImage: NetworkImage('https://picsum.photos/id/$random/100/100'),
-      onForegroundImageError: (exception, stackTrace) =>
-          NetworkImage('https://picsum.photos/id/${random + 1}/100/100'),
-      child: Text(myFaker.person.firstName()),
+      foregroundImage: NetworkImage(url),
+      child: Text(text),
     );
   }
 }

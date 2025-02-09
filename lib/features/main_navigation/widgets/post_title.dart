@@ -1,13 +1,15 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart' as faker;
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/avatar_with_plus.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/group_of_avatars.dart';
+import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar_group.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_images.dart';
+import 'package:twitter_clone_2025/features/main_navigation/widgets/action_sheet.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/youtube_player.dart';
 
 const List<String> youtubeIds = [
@@ -23,23 +25,48 @@ class PostTile extends StatelessWidget {
   final bool isVideo;
   final bool isImage;
   final int numOfImages;
+  final int replies;
+  final String url;
+  final String text;
+  final String sentence;
   PostTile({
     super.key,
     required this.isVideo,
     required this.isImage,
     required this.numOfImages,
     required this.isIdentified,
+    required this.url,
+    required this.text,
+    required this.sentence,
+    required this.replies,
   });
 
-  final myFaker = faker.Faker();
+  final _fakeData = faker.Faker();
 
   final int viewRandom = Random().nextInt(300);
-  final int repliesRandom = Random().nextInt(15);
+  //final int repliesRandom = Random().nextInt(15);
   final int likesRandom = Random().nextInt(100);
+
+  void _onShowBottomSheet(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      //isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const ActionSheet(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    print('numOfImages = $numOfImages');
+    final List<String> avatars = [];
+    final List<String> texts = [];
+    for (var i = 0; i < 3; i++) {
+      avatars.add(_fakeData.image.loremPicsum(random: Random().nextInt(100)));
+      texts.add(_fakeData.person.firstName());
+    }
+    print(avatars);
+    print(texts);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -54,14 +81,14 @@ class PostTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  AvatarWithPlus(),
+                  AvatarWithPlus(url: url, text: text, radius: 25),
                   ConstrainedBox(
                     constraints: BoxConstraints(
                         maxHeight: isImage || isVideo
                             ? MediaQuery.of(context).size.height * 0.25
                             : 55),
                     child: VerticalDivider(
-                      width: Sizes.size32,
+                      width: Sizes.size10,
                       thickness: Sizes.size1,
                       color: Colors.grey.shade500,
                       indent: 10,
@@ -85,7 +112,7 @@ class PostTile extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              myFaker.person.firstName(),
+                              text,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: Sizes.size16,
@@ -114,10 +141,13 @@ class PostTile extends StatelessWidget {
                               ),
                             ),
                             Gaps.h10,
-                            const FaIcon(
-                              FontAwesomeIcons.ellipsis,
-                              color: Colors.black,
-                              size: Sizes.size20,
+                            GestureDetector(
+                              onTap: () => _onShowBottomSheet(context),
+                              child: const FaIcon(
+                                FontAwesomeIcons.ellipsis,
+                                color: Colors.black,
+                                size: Sizes.size20,
+                              ),
                             ),
                           ],
                         ),
@@ -126,7 +156,7 @@ class PostTile extends StatelessWidget {
                   ),
                   Gaps.v8,
                   Text(
-                    myFaker.lorem.sentence(),
+                    sentence,
                     textAlign: TextAlign.start,
                     maxLines: isVideo || isImage ? 1 : null,
                     overflow: isVideo || isImage
@@ -193,13 +223,17 @@ class PostTile extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: GroupOfAvatars(numOfAvatars: repliesRandom),
+              child: RenderAvatarGroup(
+                avatars: avatars,
+                texts: texts,
+                replies: replies,
+              ),
             ),
             Gaps.h10,
             Expanded(
               flex: 5,
               child: Text(
-                '$repliesRandom replies • $likesRandom likes',
+                '$replies replies • $likesRandom likes',
                 style: TextStyle(
                   fontSize: Sizes.size16,
                   color: Colors.black.withOpacity(0.8),

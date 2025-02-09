@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
@@ -14,6 +17,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late ScrollController _scrollController;
   bool _showFloatingButton = false;
+
+  final _fakeData = faker.Faker();
+
   @override
   void initState() {
     super.initState();
@@ -68,6 +74,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     isVideo: index % 6 == 0 ? true : false,
                     isImage: index % 6 == 1 || index % 6 == 4 ? true : false,
                     numOfImages: index % 6 == 4 ? 3 : 1,
+                    replies: Random().nextInt(15),
+                    url: _fakeData.image
+                        .loremPicsum(random: Random().nextInt(50)),
+                    text: _fakeData.person.firstName(),
+                    sentence: _fakeData.lorem.sentence(),
                   ),
                 ),
                 separatorBuilder: (context, index) => Container(
@@ -83,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: MediaQuery.of(context).size.width * 0.5 - 138 / 2,
                   child: GestureDetector(
                     onTap: _onTop,
-                    child: const RenderFloatingButton(),
+                    child: RenderFloatingButton(),
                   ),
                 )
               : Container(),

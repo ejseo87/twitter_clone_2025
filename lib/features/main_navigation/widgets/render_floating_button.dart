@@ -1,11 +1,16 @@
+import 'dart:math';
+
+import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar.dart';
 
 class RenderFloatingButton extends StatelessWidget {
-  const RenderFloatingButton({super.key});
+  RenderFloatingButton({super.key});
   final double _gap = 3;
   final double _radius = 26;
+  final _fakeData = faker.Faker();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -62,7 +67,11 @@ class RenderFloatingButton extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular((_radius + 4) / 2),
       ),
-      child: RenderAvatar(radius: _radius),
+      child: RenderAvatar(
+        radius: _radius,
+        url: _fakeData.image.loremPicsum(random: Random().nextInt(50)),
+        text: _fakeData.person.firstName(),
+      ),
     );
   }
 }
