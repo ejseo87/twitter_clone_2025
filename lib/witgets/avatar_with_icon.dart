@@ -1,19 +1,19 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar.dart';
+import 'package:twitter_clone_2025/witgets/render_avatar.dart';
 
-class AvatarWithPlus extends StatelessWidget {
+class AvatarWithIcon extends StatelessWidget {
   final String url;
   final String text;
   final double radius;
-  const AvatarWithPlus({
+  final IconData icon;
+  const AvatarWithIcon({
     super.key,
     required this.url,
     required this.text,
     required this.radius,
+    required this.icon,
   });
 
   @override
@@ -34,9 +34,17 @@ class AvatarWithPlus extends StatelessWidget {
               padding: const EdgeInsets.all(2),
               decoration: const BoxDecoration(
                   color: Colors.white, shape: BoxShape.circle),
-              child: const FaIcon(
-                FontAwesomeIcons.circlePlus,
-                color: Colors.black,
+              child: FaIcon(
+                icon,
+                color: icon == FontAwesomeIcons.plus
+                    ? Colors.black
+                    : icon == FontAwesomeIcons.solidHeart
+                        ? Colors.pink
+                        : icon == FontAwesomeIcons.solidCircleUser
+                            ? Colors.purple
+                            : icon == FontAwesomeIcons.at
+                                ? Colors.green
+                                : Colors.blue,
                 size: Sizes.size20,
               ),
             ),

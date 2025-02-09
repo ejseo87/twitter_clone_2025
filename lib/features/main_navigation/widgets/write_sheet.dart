@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar_group.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar.dart';
+import 'package:twitter_clone_2025/witgets/render_avatar.dart';
 
 class WriteSheet extends StatefulWidget {
   final String url;

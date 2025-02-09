@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/avatar_with_plus.dart';
+import 'package:twitter_clone_2025/witgets/avatar_with_icon.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar_group.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_images.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/action_sheet.dart';
@@ -81,7 +81,12 @@ class PostTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  AvatarWithPlus(url: url, text: text, radius: 25),
+                  AvatarWithIcon(
+                    url: url,
+                    text: text,
+                    radius: 25,
+                    icon: FontAwesomeIcons.plus,
+                  ),
                   ConstrainedBox(
                     constraints: BoxConstraints(
                         maxHeight: isImage || isVideo

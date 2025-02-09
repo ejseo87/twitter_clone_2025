@@ -2,6 +2,7 @@ import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
+import 'package:twitter_clone_2025/features/activity/activity_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/home_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/nav_tab.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/stf_screen.dart';
@@ -53,11 +54,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const StfScreen(),
+            child: const SearchScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: const StfScreen(),
+            child: const ActivityScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
@@ -88,7 +89,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
                 selectedIcon: FontAwesomeIcons.solidCompass,
                 text: "Discover",
                 isSelected: _selectedIndex == 1,
-                onTap: () => const SearchScreen(),
+                onTap: () => _onTap(1),
               ),
               NavTab(
                 icon: FontAwesomeIcons.penToSquare,
