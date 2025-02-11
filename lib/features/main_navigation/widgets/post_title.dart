@@ -11,6 +11,7 @@ import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avata
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_images.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/action_sheet.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/youtube_player.dart';
+import 'package:twitter_clone_2025/witgets/reaction_icon_row.dart';
 
 const List<String> youtubeIds = [
   "ThGbP9wgkz8",
@@ -199,25 +200,7 @@ class PostTile extends StatelessWidget {
                                 )
                               : Container(),
                   Gaps.v10,
-                  const Row(
-                    children: [
-                      FaIcon(
-                        FontAwesomeIcons.heart,
-                      ),
-                      Gaps.h16,
-                      FaIcon(
-                        FontAwesomeIcons.message,
-                      ),
-                      Gaps.h16,
-                      FaIcon(
-                        FontAwesomeIcons.arrowsRotate,
-                      ),
-                      Gaps.h16,
-                      FaIcon(
-                        FontAwesomeIcons.paperPlane,
-                      ),
-                    ],
-                  ),
+                  const ReactionIconRow(),
                 ],
               ),
             ),

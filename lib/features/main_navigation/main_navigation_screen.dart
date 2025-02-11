@@ -8,6 +8,7 @@ import 'package:twitter_clone_2025/features/main_navigation/widgets/nav_tab.dart
 import 'package:twitter_clone_2025/features/main_navigation/widgets/stf_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/write_sheet.dart';
 import 'package:twitter_clone_2025/features/search/search_screen.dart';
+import 'package:twitter_clone_2025/features/users/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -17,7 +18,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 4;
 
   final _fakeData = faker.Faker();
 
@@ -62,7 +63,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: const StfScreen(),
+            child: const UserProfileScreen(),
           ),
         ],
       ),
