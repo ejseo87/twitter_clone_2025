@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/authentication/password_screen.dart';
-import 'package:twitter_clone_2025/witgets/form_button.dart';
+import 'package:twitter_clone_2025/widgets/form_button.dart';
 
 class ConfirmationCodeScreen extends StatefulWidget {
   final Map<String, dynamic> userAccountInfo;

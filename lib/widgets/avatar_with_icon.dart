@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/witgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/render_avatar.dart';
 
 class AvatarWithIcon extends StatelessWidget {
   final String url;

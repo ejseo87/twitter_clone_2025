@@ -2,10 +2,8 @@ import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
-import 'package:twitter_clone_2025/features/activity/activity_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/home_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/nav_tab.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/stf_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/write_sheet.dart';
 import 'package:twitter_clone_2025/features/search/search_screen.dart';
 import 'package:twitter_clone_2025/features/users/user_profile_screen.dart';
@@ -18,7 +16,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 4;
+  int _selectedIndex = 2;
 
   final _fakeData = faker.Faker();
 
@@ -36,9 +34,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       context: context,
-      builder: (context) => WriteSheet(
-        url: _fakeData.image.loremPicsum(),
-        text: "jane_mobbin",
+      builder: (context) => const WriteSheet(
+        url: "https://picsum.photos/id/81/200/300",
+        text: "alice_liddell",
       ),
     );
   }
@@ -50,16 +48,16 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       body: Stack(
         children: [
           Offstage(
-            offstage: _selectedIndex != 0,
-            child: const HomeScreen(),
-          ),
+              offstage: _selectedIndex != 0,
+              child: const HomeScreen() //HomeScreen(),
+              ),
           Offstage(
             offstage: _selectedIndex != 1,
             child: const SearchScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: const ActivityScreen(),
+            child: const SearchScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,

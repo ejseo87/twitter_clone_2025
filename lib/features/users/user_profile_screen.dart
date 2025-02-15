@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart' as faker;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
@@ -10,7 +9,6 @@ import 'package:twitter_clone_2025/features/settings/settings_screen.dart';
 import 'package:twitter_clone_2025/features/users/widgets/followers_avatar.dart';
 import 'package:twitter_clone_2025/features/users/widgets/persistent_tab_bar.dart';
 import 'package:twitter_clone_2025/features/users/widgets/user_thread_tile.dart';
-import 'package:twitter_clone_2025/witgets/reaction_icon_row.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});

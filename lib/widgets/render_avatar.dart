@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone_2025/contants/Sizes.dart';
 
 class RenderAvatar extends StatelessWidget {
   final double radius;
@@ -17,7 +18,13 @@ class RenderAvatar extends StatelessWidget {
       radius: radius,
       backgroundColor: Theme.of(context).primaryColor,
       foregroundImage: NetworkImage(url),
-      child: Text(text),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: Sizes.size14,
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

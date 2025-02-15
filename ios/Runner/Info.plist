@@ -45,5 +45,18 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Please grant camera permission</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please grant mic permission</string>
+	<!-- gal: Required -->
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need add only access to save medias</string>
+	<!-- gal: Required -->
+	<!-- gal: Required for ios < 14 or saving to album -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to save medias</string>
+	<!-- gal: Required for ios < 14 or saving to album -->
+
 </dict>
 </plist>

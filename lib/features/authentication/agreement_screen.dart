@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/witgets/form_button.dart';
+import 'package:twitter_clone_2025/widgets/form_button.dart';
 
 class AgreementScreen extends StatefulWidget {
   const AgreementScreen({super.key});

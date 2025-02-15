@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/witgets/avatar_with_icon.dart';
-import 'package:twitter_clone_2025/witgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/avatar_with_icon.dart';
 
 List<String> tabs = [
   "All",

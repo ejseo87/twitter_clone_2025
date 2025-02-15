@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
+import 'package:twitter_clone_2025/features/main_navigation/camera_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar_group.dart';
-import 'package:twitter_clone_2025/witgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/render_avatar.dart';
 
 class WriteSheet extends StatefulWidget {
   final String url;
@@ -20,6 +25,8 @@ class WriteSheet extends StatefulWidget {
 
 class _WriteSheetState extends State<WriteSheet> {
   bool _isAnyInput = false;
+  final bool _getImage = false;
+  XFile? _image;
 
   void _onTapHideKeyboard() {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -31,6 +38,17 @@ class _WriteSheetState extends State<WriteSheet> {
 
   void _onPost(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  Future<void> _onCameraTap() async {
+    final XFile image = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const CameraScreen(),
+      ),
+    );
+    print("Xfile image = $image");
+    _image = image;
+    setState(() {});
   }
 
   @override
@@ -45,13 +63,13 @@ class _WriteSheetState extends State<WriteSheet> {
       child: GestureDetector(
         onTap: _onTapHideKeyboard,
         child: Scaffold(
-          //resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: const Text(
               "New thread",
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: Sizes.size20,
+                fontWeight: FontWeight.w600,
+                fontSize: Sizes.size18,
               ),
             ),
             centerTitle: true,
@@ -63,7 +81,7 @@ class _WriteSheetState extends State<WriteSheet> {
               child: const Text(
                 "Cancel",
                 style: TextStyle(
-                  fontSize: Sizes.size16,
+                  fontSize: Sizes.size14,
                   color: Colors.black,
                 ),
               ),
@@ -73,83 +91,132 @@ class _WriteSheetState extends State<WriteSheet> {
           ),
           body: Stack(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Sizes.size10,
-                  vertical: Sizes.size20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          RenderAvatar(
-                            radius: 25,
-                            url: widget.url,
-                            text: widget.text,
-                          ),
-                          SizedBox(
-                            height: size.height * 0.1,
-                            child: VerticalDivider(
-                              width: 10,
-                              thickness: 1,
-                              color: Colors.grey.shade400,
-                              indent: Sizes.size10,
+              SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Sizes.size10,
+                    vertical: Sizes.size20,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: [
+                            RenderAvatar(
+                              radius: 25,
+                              url: widget.url,
+                              text: widget.text,
                             ),
-                          ),
-                          Opacity(
-                            opacity: 0.5,
-                            child: RenderAvatarGroup(
-                                avatars: [widget.url],
-                                texts: [widget.text],
-                                replies: 1),
-                          ),
-                        ],
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.1,
+                              child: VerticalDivider(
+                                width: 10,
+                                thickness: 1,
+                                color: Colors.grey.shade400,
+                                indent: Sizes.size10,
+                                endIndent: Sizes.size10,
+                              ),
+                            ),
+                            Opacity(
+                              opacity: 0.5,
+                              child: RenderAvatarGroup(
+                                  avatars: [widget.url],
+                                  texts: [widget.text],
+                                  replies: 1),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.text,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                      Expanded(
+                        flex: 5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.text,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          Gaps.v5,
-                          TextField(
-                            onChanged: (value) {
-                              if (value.isNotEmpty) {
-                                setState(() {
-                                  _isAnyInput = true;
-                                });
-                              } else {
-                                setState(() {
-                                  _isAnyInput = false;
-                                });
-                              }
-                            },
-                            maxLines: null,
-                            cursorColor: Theme.of(context).primaryColor,
-                            decoration: const InputDecoration(
-                              hintText: "Start a thread...",
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              errorBorder: InputBorder.none,
-                              disabledBorder: InputBorder.none,
+                            Gaps.v5,
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.12,
+                              child: TextField(
+                                onChanged: (value) {
+                                  if (value.isNotEmpty) {
+                                    setState(() {
+                                      _isAnyInput = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _isAnyInput = false;
+                                    });
+                                  }
+                                },
+                                //expands: true,
+                                maxLines: null,
+                                minLines: null,
+                                textInputAction: TextInputAction.newline,
+                                cursorColor: Theme.of(context).primaryColor,
+                                decoration: const InputDecoration(
+                                  hintText: "Start a thread...",
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+                            Gaps.v10,
+                            _image == null
+                                ? GestureDetector(
+                                    onTap: _onCameraTap,
+                                    child: FaIcon(
+                                      FontAwesomeIcons.paperclip,
+                                      color: Colors.grey.shade600,
+                                      size: Sizes.size20,
+                                    ),
+                                  )
+                                : Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          Sizes.size10,
+                                        ),
+                                        child: Image.file(
+                                          File(_image!.path),
+                                          fit: BoxFit.cover,
+                                          width: 300,
+                                          height: 200,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: Sizes.size10,
+                                        right: Sizes.size10,
+                                        child: IconButton(
+                                          onPressed: () => setState(() {
+                                            _image = null;
+                                          }),
+                                          icon: const FaIcon(
+                                            FontAwesomeIcons.xmark,
+                                            color: Colors.white,
+                                            size: Sizes.size32,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Positioned(
@@ -159,7 +226,7 @@ class _WriteSheetState extends State<WriteSheet> {
                   width: size.width,
                   padding: const EdgeInsets.only(
                     top: Sizes.size20,
-                    bottom: Sizes.size20,
+                    bottom: Sizes.size40,
                     left: Sizes.size20,
                     right: Sizes.size20,
                   ),

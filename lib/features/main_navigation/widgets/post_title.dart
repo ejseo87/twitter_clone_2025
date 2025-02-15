@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
-import 'package:twitter_clone_2025/witgets/avatar_with_icon.dart';
+import 'package:twitter_clone_2025/widgets/avatar_with_icon.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar_group.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/render_images.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/action_sheet.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/youtube_player.dart';
-import 'package:twitter_clone_2025/witgets/reaction_icon_row.dart';
+import 'package:twitter_clone_2025/widgets/reaction_icon_row.dart';
 
 const List<String> youtubeIds = [
   "ThGbP9wgkz8",

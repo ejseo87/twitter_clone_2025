@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:twitter_clone_2025/witgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/render_avatar.dart';
 
 class RenderFloatingButton extends StatelessWidget {
   RenderFloatingButton({super.key});

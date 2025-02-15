@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
-import 'package:twitter_clone_2025/witgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/render_avatar.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

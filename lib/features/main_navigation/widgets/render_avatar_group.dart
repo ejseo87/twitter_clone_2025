@@ -1,7 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:twitter_clone_2025/witgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/render_avatar.dart';
 
 class RenderAvatarGroup extends StatelessWidget {
   final List<String> avatars;
