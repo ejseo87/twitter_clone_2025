@@ -1,8 +1,8 @@
-import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
-import 'package:twitter_clone_2025/features/main_navigation/home_screen.dart';
+import 'package:twitter_clone_2025/features/activity/activity_screen.dart';
+import 'package:twitter_clone_2025/features/home/home_screen.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/nav_tab.dart';
 import 'package:twitter_clone_2025/features/main_navigation/widgets/write_sheet.dart';
 import 'package:twitter_clone_2025/features/search/search_screen.dart';
@@ -16,9 +16,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 2;
-
-  final _fakeData = faker.Faker();
+  int _selectedIndex = 0;
 
   void _onTap(int index) {
     setState(() {
@@ -57,7 +55,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: const SearchScreen(),
+            child: const ActivityScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
@@ -66,7 +64,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+        //color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(
             top: Sizes.size28,

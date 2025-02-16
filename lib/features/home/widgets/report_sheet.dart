@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 List<String> reportItemList = [
   "I just don't like it",
@@ -65,6 +66,7 @@ class ReportSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isDark = isDartMode(context);
     return Container(
       height: size.height * 0.75,
       clipBehavior: Clip.hardEdge,
@@ -72,7 +74,7 @@ class ReportSheet extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(30),
           child: AppBar(
@@ -102,7 +104,6 @@ class ReportSheet extends StatelessWidget {
                 "Report",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.black,
                   fontSize: Sizes.size20,
                   fontWeight: FontWeight.w800,
                 ),
@@ -123,7 +124,6 @@ class ReportSheet extends StatelessWidget {
                   Text(
                     "Why are you reporting this thread?",
                     style: TextStyle(
-                      color: Colors.black,
                       fontSize: Sizes.size16,
                       fontWeight: FontWeight.w800,
                     ),
@@ -146,7 +146,7 @@ class ReportSheet extends StatelessWidget {
                 itemCount: reportItemList.length,
                 separatorBuilder: (context, index) => Divider(
                   thickness: _dividerThickness,
-                  color: Colors.grey.shade400,
+                  color: isDark ? Colors.grey.shade700 : Colors.grey.shade400,
                 ),
                 itemBuilder: (context, index) => ListTile(
                   onTap: () => _onTap(context, index),

@@ -9,6 +9,7 @@ import 'package:twitter_clone_2025/features/settings/settings_screen.dart';
 import 'package:twitter_clone_2025/features/users/widgets/followers_avatar.dart';
 import 'package:twitter_clone_2025/features/users/widgets/persistent_tab_bar.dart';
 import 'package:twitter_clone_2025/features/users/widgets/user_thread_tile.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -22,7 +23,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     "https://picsum.photos/id/60/200/300",
     "https://picsum.photos/id/83/200/300",
   ];
-  final _itemCount = 10;
+  final _itemCount = 5;
   final _fakeData = faker.Faker();
   final List<String> _mention = [];
   final List<String> _postedTime = [];
@@ -55,34 +56,34 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDartMode(context);
     return SafeArea(
       child: DefaultTabController(
         length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
+              backgroundColor: isDark ? Colors.black : Colors.white,
+              elevation: 1,
               leading: IconButton(
                 onPressed: () {},
-                icon: FaIcon(
+                icon: const FaIcon(
                   FontAwesomeIcons.globe,
-                  color: Colors.grey.shade700,
                   size: Sizes.size20,
                 ),
               ),
               actions: [
                 IconButton(
                   onPressed: () {},
-                  icon: FaIcon(
+                  icon: const FaIcon(
                     FontAwesomeIcons.camera,
-                    color: Colors.grey.shade700,
                     size: Sizes.size20,
                   ),
                 ),
                 IconButton(
                   onPressed: _onGearPressed,
-                  icon: FaIcon(
+                  icon: const FaIcon(
                     FontAwesomeIcons.gear,
-                    color: Colors.grey.shade700,
                     size: Sizes.size20,
                   ),
                 ),
@@ -97,7 +98,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       style: TextStyle(
                         fontSize: Sizes.size24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
                       ),
                     ),
                     subtitle: Row(
@@ -106,7 +106,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           "alice_liddell",
                           style: TextStyle(
                             fontSize: Sizes.size14,
-                            color: Colors.black,
                           ),
                         ),
                         Gaps.h5,
@@ -117,7 +116,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(Sizes.size10),
-                            color: Colors.grey.shade200,
+                            color: isDark
+                                ? Colors.grey.shade800
+                                : Colors.grey.shade200,
                           ),
                           child: Text(
                             "thread.net",
@@ -143,7 +144,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       "It’s no use going back to yesterday, because I was a different person then.",
                       style: TextStyle(
                         fontSize: Sizes.size14,
-                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -178,7 +178,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               style: TextStyle(
                                 fontSize: Sizes.size14,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -203,7 +202,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                               style: TextStyle(
                                 fontSize: Sizes.size14,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -233,7 +231,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   mentioned: index % 2 == 1,
                 ),
                 separatorBuilder: (context, index) => Divider(
-                  color: Colors.grey.shade300,
+                  color: isDark ? Colors.grey.shade200 : Colors.grey.shade300,
                 ),
                 itemCount: _itemCount,
               ),
@@ -248,7 +246,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   mentioned: index % 2 == 1,
                 ),
                 separatorBuilder: (context, index) => Divider(
-                  color: Colors.grey.shade300,
+                  color: isDark ? Colors.grey.shade500 : Colors.grey.shade300,
                 ),
                 itemCount: _itemCount,
               ),

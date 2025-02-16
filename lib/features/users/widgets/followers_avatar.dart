@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 class FollowersAvatar extends StatelessWidget {
   final List<String> avatars;
@@ -15,6 +15,7 @@ class FollowersAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDartMode(context);
     return SizedBox(
       height: _radius + _borderWidth * 2,
       width: MediaQuery.of(context)
@@ -30,7 +31,7 @@ class FollowersAvatar extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Colors.white,
+                    color: isDark ? Colors.grey.shade500 : Colors.white,
                     width: Sizes.size3,
                   ),
                   shape: BoxShape.circle,

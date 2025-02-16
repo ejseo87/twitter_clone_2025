@@ -4,32 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 
 class RenderImages extends StatelessWidget {
-  final int number;
+  final List<String> urls;
   RenderImages({
     super.key,
-    required this.number,
+    required this.urls,
   });
 
   final int postRandom = Random().nextInt(200);
 
   @override
   Widget build(BuildContext context) {
-    print('number = $number');
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
         height: 200,
-        width: 310 * number.toDouble(),
+        width: 310 * urls.length.toDouble(),
         child: ListView.separated(
           //shrinkWrap: true,
           scrollDirection: Axis.horizontal,
-          itemCount: number,
+          itemCount: urls.length,
           separatorBuilder: (context, index) => Gaps.h8,
           itemBuilder: (context, index) {
             return ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                'https://picsum.photos/id/${Random().nextInt(200)}/300/200',
+                urls[index],
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
@@ -37,6 +36,11 @@ class RenderImages extends StatelessWidget {
                   }
                   return const CircularProgressIndicator();
                 },
+                errorBuilder: (context, error, stackTrace) => Container(
+                  child: const Center(
+                    child: Text("Image Loading Fail...."),
+                  ),
+                ),
               ),
             );
           },

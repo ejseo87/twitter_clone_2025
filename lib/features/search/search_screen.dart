@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/widgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -22,7 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
   final List<String> discriptions = [];
   final List<String> usernames = [];
   final List<String> followers = [];
-  final int _itemCount = 20;
+  final int _itemCount = 10;
 
   final TextEditingController _textEditingController =
       TextEditingController(text: "Search");
@@ -59,6 +60,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDartMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -81,6 +83,12 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: _textEditingController,
               onChanged: _onSearchChaned,
               onSubmitted: _onSearchSubmitted,
+              style: TextStyle(
+                color: isDark ? Colors.white : Colors.black,
+              ),
+              placeholderStyle: TextStyle(
+                color: isDark ? Colors.white : Colors.black,
+              ),
               prefixIcon: const FaIcon(FontAwesomeIcons.magnifyingGlass),
             ),
           ),
@@ -90,8 +98,8 @@ class _SearchScreenState extends State<SearchScreen> {
         onTap: _onBodyTap,
         child: ListView.separated(
           itemCount: _itemCount,
-          separatorBuilder: (context, index) => const Divider(
-            color: Colors.black,
+          separatorBuilder: (context, index) => Divider(
+            color: isDark ? Colors.grey.shade400 : Colors.black,
             indent: 80,
           ),
           itemBuilder: (context, index) => ListTile(
@@ -108,7 +116,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: const TextStyle(
                     fontSize: Sizes.size16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    //color: Colors.black,
                   ),
                 ),
                 Gaps.h5,
@@ -133,10 +141,10 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: [
                   TextSpan(
                     text: "\n${followers[index]} followers",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: Sizes.size16,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: isDark ? Colors.grey.shade400 : Colors.black,
                       height: 2.0,
                     ),
                   )
@@ -156,7 +164,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 style: TextStyle(
                   fontSize: Sizes.size16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
             ),

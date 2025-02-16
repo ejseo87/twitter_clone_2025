@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/report_sheet.dart';
+import 'package:twitter_clone_2025/features/home/widgets/report_sheet.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 class ActionSheet extends StatefulWidget {
   const ActionSheet({super.key});
@@ -28,6 +29,7 @@ class _ActionSheetState extends State<ActionSheet> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isDark = isDartMode(context);
     return Container(
       height: size.height * 0.4,
       clipBehavior: Clip.hardEdge,
@@ -35,7 +37,7 @@ class _ActionSheetState extends State<ActionSheet> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(30),
           child: AppBar(
@@ -45,7 +47,7 @@ class _ActionSheetState extends State<ActionSheet> {
               height: Sizes.size4,
               width: Sizes.size40,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: isDark ? Colors.grey.shade900 : Colors.grey.shade300,
                 border: Border.all(
                   width: 1.0,
                   color: Colors.grey.shade300,
@@ -64,7 +66,7 @@ class _ActionSheetState extends State<ActionSheet> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(Sizes.size16),
                 ),
                 child: Column(
@@ -78,7 +80,6 @@ class _ActionSheetState extends State<ActionSheet> {
                       child: Text(
                         "Unfollow",
                         style: TextStyle(
-                          color: Colors.black,
                           fontSize: Sizes.size14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -86,7 +87,8 @@ class _ActionSheetState extends State<ActionSheet> {
                     ),
                     Divider(
                       thickness: 1,
-                      color: Colors.grey.shade300,
+                      color:
+                          isDark ? Colors.grey.shade500 : Colors.grey.shade300,
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(
@@ -96,7 +98,6 @@ class _ActionSheetState extends State<ActionSheet> {
                       child: Text(
                         "Mute",
                         style: TextStyle(
-                          color: Colors.black,
                           fontSize: Sizes.size14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -108,7 +109,7 @@ class _ActionSheetState extends State<ActionSheet> {
               Gaps.v20,
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
                   borderRadius: BorderRadius.circular(Sizes.size16),
                 ),
                 child: Column(
@@ -122,7 +123,6 @@ class _ActionSheetState extends State<ActionSheet> {
                       child: Text(
                         "Hide",
                         style: TextStyle(
-                          color: Colors.black,
                           fontSize: Sizes.size14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -130,7 +130,8 @@ class _ActionSheetState extends State<ActionSheet> {
                     ),
                     Divider(
                       thickness: 1,
-                      color: Colors.grey.shade300,
+                      color:
+                          isDark ? Colors.grey.shade500 : Colors.grey.shade300,
                     ),
                     GestureDetector(
                       onTap: () => _onReportSheet(context),
@@ -142,7 +143,7 @@ class _ActionSheetState extends State<ActionSheet> {
                         child: Text(
                           "Report",
                           style: TextStyle(
-                            color: _reportSelected ? Colors.red : Colors.black,
+                            color: _reportSelected ? Colors.red : null,
                             fontSize: Sizes.size14,
                             fontWeight: FontWeight.bold,
                           ),

@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/widgets/avatar_with_icon.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 List<String> tabs = [
   "All",
@@ -118,6 +119,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDartMode(context);
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
@@ -143,7 +145,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
               border: Border.all(color: Colors.grey.shade400),
             ),
             labelColor: Colors.white,
-            unselectedLabelColor: Colors.black,
+            unselectedLabelColor: isDark ? Colors.grey.shade500 : Colors.black,
             tabs: [
               for (var tab in tabs)
                 Container(
@@ -171,8 +173,8 @@ class _ActivityScreenState extends State<ActivityScreen> {
             children: [
               ListView.separated(
                 itemCount: items.length,
-                separatorBuilder: (context, index) => const Divider(
-                  color: Colors.black,
+                separatorBuilder: (context, index) => Divider(
+                  color: isDark ? Colors.white : Colors.black,
                   indent: 80,
                 ),
                 itemBuilder: (context, index) {
@@ -219,14 +221,13 @@ class _ActivityScreenState extends State<ActivityScreen> {
                             style: const TextStyle(
                               fontSize: Sizes.size16,
                               fontWeight: FontWeight.w600,
-                              color: Colors.black,
                             ),
                           ),
                           Gaps.h5,
-                          Text(
-                            notifications[index],
-                            style: TextStyle(
-                              color: Colors.grey.shade500,
+                          Opacity(
+                            opacity: 0.87,
+                            child: Text(
+                              notifications[index],
                             ),
                           ),
                         ],
@@ -241,9 +242,11 @@ class _ActivityScreenState extends State<ActivityScreen> {
                           children: [
                             TextSpan(
                               text: "\n${sentences[index]}",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: Sizes.size16,
-                                color: Colors.black,
+                                color: isDark
+                                    ? Colors.grey.shade200
+                                    : Colors.black,
                               ),
                             )
                           ],
@@ -269,7 +272,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                                 child: Text(
                                   "Following",
                                   style: TextStyle(
-                                    color: Colors.grey.shade400,
+                                    color: Colors.grey.shade500,
                                   ),
                                 ),
                               ),

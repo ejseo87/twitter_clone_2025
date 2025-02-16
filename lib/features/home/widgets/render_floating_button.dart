@@ -4,6 +4,7 @@ import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/widgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 class RenderFloatingButton extends StatelessWidget {
   RenderFloatingButton({super.key});
@@ -13,30 +14,34 @@ class RenderFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDartMode(context);
     return Container(
       width: 138,
       height: _radius + _gap * 6,
       padding: EdgeInsets.all(_gap * 2),
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
         borderRadius: BorderRadius.circular((_radius + _gap * 4) / 2),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.grey,
+            color: isDark ? Colors.grey.shade400 : Colors.grey,
             blurRadius: 3,
-            offset: Offset(3, 3),
+            offset: const Offset(3, 3),
           ),
         ],
       ),
       child: Stack(
         children: [
-          Positioned(left: 0, child: makeOneAvatar()),
-          Positioned(left: _radius - (_gap * 3) / 2, child: makeOneAvatar()),
+          Positioned(left: 0, child: makeOneAvatar(context)),
           Positioned(
-              left: _radius * 2 - (_gap * 4) / 2, child: makeOneAvatar()),
+              left: _radius - (_gap * 3) / 2, child: makeOneAvatar(context)),
           Positioned(
-              left: _radius * 3 - (_gap * 4) / 2, child: makeOneAvatar()),
+              left: _radius * 2 - (_gap * 4) / 2,
+              child: makeOneAvatar(context)),
+          Positioned(
+              left: _radius * 3 - (_gap * 4) / 2,
+              child: makeOneAvatar(context)),
           Positioned(
             left: _radius * 4 - (_gap * 6) / 2,
             child: Container(
@@ -44,7 +49,7 @@ class RenderFloatingButton extends StatelessWidget {
               height: _radius + 6,
               padding: const EdgeInsets.all(3),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? Colors.grey.shade400 : Colors.white,
                 borderRadius: BorderRadius.circular((_radius + 4) / 2),
               ),
               child: const FaIcon(
@@ -58,13 +63,13 @@ class RenderFloatingButton extends StatelessWidget {
     );
   }
 
-  Container makeOneAvatar() {
+  Container makeOneAvatar(BuildContext context) {
     return Container(
       width: _radius + 6,
       height: _radius + 6,
       padding: const EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDartMode(context) ? Colors.grey.shade400 : Colors.white,
         borderRadius: BorderRadius.circular((_radius + 4) / 2),
       ),
       child: RenderAvatar(

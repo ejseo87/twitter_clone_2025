@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 class PrivacyScreen extends StatefulWidget {
   const PrivacyScreen({super.key});
@@ -27,25 +28,26 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDartMode(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.5,
         leadingWidth: 100,
         leading: TextButton(
           onPressed: _onBackPressed,
-          child: const Row(
+          child: Row(
             children: [
               FaIcon(
                 FontAwesomeIcons.chevronLeft,
                 size: Sizes.size16,
-                color: Colors.black,
+                color: isDark ? Colors.white : Colors.black,
               ),
               Gaps.h5,
               Text(
                 "Back",
                 style: TextStyle(
                   fontSize: Sizes.size16,
-                  color: Colors.black,
+                  color: isDark ? Colors.white : Colors.black,
                 ),
               ),
             ],

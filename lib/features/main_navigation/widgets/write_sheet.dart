@@ -6,8 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/main_navigation/camera_screen.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/render_avatar_group.dart';
+import 'package:twitter_clone_2025/widgets/render_avatar_group.dart';
 import 'package:twitter_clone_2025/widgets/render_avatar.dart';
+import 'package:twitter_clone_2025/widgets/utils.dart';
 
 class WriteSheet extends StatefulWidget {
   final String url;
@@ -54,6 +55,7 @@ class _WriteSheetState extends State<WriteSheet> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final isDark = isDartMode(context);
     return Container(
       height: size.height * 0.9,
       clipBehavior: Clip.hardEdge,
@@ -64,6 +66,7 @@ class _WriteSheetState extends State<WriteSheet> {
         onTap: _onTapHideKeyboard,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
+          backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
           appBar: AppBar(
             title: const Text(
               "New thread",
@@ -78,11 +81,11 @@ class _WriteSheetState extends State<WriteSheet> {
               style: TextButton.styleFrom(
                 overlayColor: Colors.blue,
               ),
-              child: const Text(
+              child: Text(
                 "Cancel",
                 style: TextStyle(
                   fontSize: Sizes.size14,
-                  color: Colors.black,
+                  color: isDark ? Colors.white : Colors.black,
                 ),
               ),
             ),
@@ -139,7 +142,7 @@ class _WriteSheetState extends State<WriteSheet> {
                             Text(
                               widget.text,
                               style: const TextStyle(
-                                color: Colors.black,
+                                //color: Colors.black,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -179,7 +182,9 @@ class _WriteSheetState extends State<WriteSheet> {
                                     onTap: _onCameraTap,
                                     child: FaIcon(
                                       FontAwesomeIcons.paperclip,
-                                      color: Colors.grey.shade600,
+                                      color: isDark
+                                          ? Colors.grey.shade400
+                                          : Colors.grey.shade600,
                                       size: Sizes.size20,
                                     ),
                                   )

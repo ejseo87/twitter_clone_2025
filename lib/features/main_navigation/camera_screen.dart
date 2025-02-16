@@ -19,6 +19,7 @@ class _CameraScreenState extends State<CameraScreen>
   bool _isPermissionDenied = false;
   bool _isSelfieMode = false;
   bool _prepareCameraDispose = false;
+  bool _cameraInitialized = false;
   FlashMode _flashMode = FlashMode.off;
 
   late final CameraController _cameraController;
@@ -47,11 +48,16 @@ class _CameraScreenState extends State<CameraScreen>
       ResolutionPreset.ultraHigh,
     );
 
-    try {
-      await _cameraController.initialize();
-    } catch (e) {
+    await _cameraController.initialize().then((value) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _cameraInitialized = true;
+      });
+    }).catchError((e) {
       print(e);
-    }
+    });
 
     await _cameraController.setFlashMode(_flashMode);
   }
@@ -166,7 +172,7 @@ class _CameraScreenState extends State<CameraScreen>
             ? const DisplayAlertMessage(
                 alertMessage: "Please check camera  permissions!",
               )
-            : !_hadPermission || !_cameraController.value.isInitialized
+            : !_hadPermission || !_cameraInitialized
                 ? const DisplayAlertMessage(alertMessage: "Initializing...")
                 : Stack(
                     alignment: Alignment.center,

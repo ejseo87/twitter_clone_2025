@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/features/main_navigation/main_navigation_screen.dart';
 
@@ -24,29 +23,7 @@ class TwitterClone2025 extends StatelessWidget {
       title: 'TikTok Clone 2025',
       theme: ThemeData(
         brightness: Brightness.light,
-        textTheme: TextTheme(
-          titleLarge: GoogleFonts.openSans(
-            fontSize: Sizes.size24,
-            fontWeight: FontWeight.w900,
-            letterSpacing: -.5,
-          ),
-          displayLarge: GoogleFonts.openSans(
-            color: Colors.black45,
-            fontSize: Sizes.size24,
-            fontWeight: FontWeight.w700,
-            letterSpacing: -.5,
-          ),
-          bodyMedium: GoogleFonts.openSans(
-            color: Colors.black.withOpacity(0.5),
-            fontSize: Sizes.size16,
-          ),
-          labelMedium: GoogleFonts.openSans(
-            color: Colors.black,
-            fontSize: Sizes.size16,
-            fontWeight: FontWeight.w800,
-            wordSpacing: 0.3,
-          ),
-        ),
+        textTheme: Typography.blackMountainView,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
           elevation: 0,
@@ -82,6 +59,7 @@ class TwitterClone2025 extends StatelessWidget {
         textTheme: Typography.whiteMountainView,
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
+          foregroundColor: Colors.white,
           backgroundColor: Colors.grey.shade900,
           surfaceTintColor: Colors.grey.shade900,
           elevation: 0,
@@ -109,7 +87,7 @@ class TwitterClone2025 extends StatelessWidget {
           labelColor: Colors.white,
           unselectedLabelColor: Colors.grey.shade500,
         ),
-        useMaterial3: true,
+        useMaterial3: false,
       ),
       home: const MainNavigationScreen(),
     );
