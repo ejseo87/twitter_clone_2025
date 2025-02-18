@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
+import 'package:twitter_clone_2025/features/home/widgets/post_title.dart';
 import 'package:twitter_clone_2025/features/main_navigation/camera_screen.dart';
 import 'package:twitter_clone_2025/widgets/render_avatar_group.dart';
 import 'package:twitter_clone_2025/widgets/render_avatar.dart';
@@ -101,126 +102,131 @@ class _WriteSheetState extends State<WriteSheet> {
                     horizontal: Sizes.size10,
                     vertical: Sizes.size20,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            RenderAvatar(
-                              radius: 25,
-                              url: widget.url,
-                              text: widget.text,
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.1,
-                              child: VerticalDivider(
-                                width: 10,
-                                thickness: 1,
-                                color: Colors.grey.shade400,
-                                indent: Sizes.size10,
-                                endIndent: Sizes.size10,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
+                            children: [
+                              RenderAvatar(
+                                radius: 25,
+                                url: widget.url,
+                                text: widget.text,
                               ),
-                            ),
-                            Opacity(
-                              opacity: 0.5,
-                              child: RenderAvatarGroup(
-                                  avatars: [widget.url],
-                                  texts: [widget.text],
-                                  replies: 1),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 5,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.text,
-                              style: const TextStyle(
-                                //color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Gaps.v5,
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.12,
-                              child: TextField(
-                                onChanged: (value) {
-                                  if (value.isNotEmpty) {
-                                    setState(() {
-                                      _isAnyInput = true;
-                                    });
-                                  } else {
-                                    setState(() {
-                                      _isAnyInput = false;
-                                    });
-                                  }
-                                },
-                                //expands: true,
-                                maxLines: null,
-                                minLines: null,
-                                textInputAction: TextInputAction.newline,
-                                cursorColor: Theme.of(context).primaryColor,
-                                decoration: const InputDecoration(
-                                  hintText: "Start a thread...",
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.15,
+                                child: VerticalDivider(
+                                  width: 10,
+                                  thickness: 1,
+                                  color: Colors.grey.shade400,
+                                  indent: Sizes.size10,
+                                  endIndent: Sizes.size10,
                                 ),
                               ),
-                            ),
-                            Gaps.v10,
-                            _image == null
-                                ? GestureDetector(
-                                    onTap: _onCameraTap,
-                                    child: FaIcon(
-                                      FontAwesomeIcons.paperclip,
-                                      color: isDark
-                                          ? Colors.grey.shade400
-                                          : Colors.grey.shade600,
-                                      size: Sizes.size20,
-                                    ),
-                                  )
-                                : Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(
-                                          Sizes.size10,
-                                        ),
-                                        child: Image.file(
-                                          File(_image!.path),
-                                          fit: BoxFit.cover,
-                                          width: 300,
-                                          height: 200,
-                                        ),
+                              Opacity(
+                                opacity: 0.5,
+                                child: RenderAvatarGroup(
+                                    avatars: [widget.url],
+                                    texts: [widget.text],
+                                    replies: 1),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Gaps.h10,
+                        Expanded(
+                          flex: 5,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.text,
+                                style: const TextStyle(
+                                  //color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Gaps.v5,
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.12,
+                                child: TextField(
+                                  onChanged: (value) {
+                                    if (value.isNotEmpty) {
+                                      setState(() {
+                                        _isAnyInput = true;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        _isAnyInput = false;
+                                      });
+                                    }
+                                  },
+                                  //expands: true,
+                                  maxLines: null,
+                                  minLines: null,
+                                  textInputAction: TextInputAction.newline,
+                                  cursorColor: Theme.of(context).primaryColor,
+                                  decoration: const InputDecoration(
+                                    hintText: "Start a thread...",
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                              Gaps.v10,
+                              _image == null
+                                  ? GestureDetector(
+                                      onTap: _onCameraTap,
+                                      child: FaIcon(
+                                        FontAwesomeIcons.paperclip,
+                                        color: isDark
+                                            ? Colors.grey.shade400
+                                            : Colors.grey.shade600,
+                                        size: Sizes.size20,
                                       ),
-                                      Positioned(
-                                        top: Sizes.size10,
-                                        right: Sizes.size10,
-                                        child: IconButton(
-                                          onPressed: () => setState(() {
-                                            _image = null;
-                                          }),
-                                          icon: const FaIcon(
-                                            FontAwesomeIcons.xmark,
-                                            color: Colors.white,
-                                            size: Sizes.size32,
+                                    )
+                                  : Stack(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            Sizes.size10,
+                                          ),
+                                          child: Image.file(
+                                            File(_image!.path),
+                                            fit: BoxFit.cover,
+                                            width: 300,
+                                            height: 200,
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                          ],
-                        ),
-                      )
-                    ],
+                                        Positioned(
+                                          top: Sizes.size10,
+                                          right: Sizes.size10,
+                                          child: IconButton(
+                                            onPressed: () => setState(() {
+                                              _image = null;
+                                            }),
+                                            icon: const FaIcon(
+                                              FontAwesomeIcons.xmark,
+                                              color: Colors.white,
+                                              size: Sizes.size32,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -228,6 +234,7 @@ class _WriteSheetState extends State<WriteSheet> {
                 bottom: 0,
                 left: 0,
                 child: Container(
+                  color: isDark ? Colors.grey.shade900 : Colors.white,
                   width: size.width,
                   padding: const EdgeInsets.only(
                     top: Sizes.size20,
