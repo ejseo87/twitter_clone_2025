@@ -1,12 +1,16 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import './widgets/display_alert_message.dart';
+import 'widgets/display_alert_message.dart';
 
 class CameraScreen extends StatefulWidget {
+  static const String routeUrl = "camera";
+  static const String routeName = "camera";
   const CameraScreen({super.key});
 
   @override
@@ -21,6 +25,9 @@ class _CameraScreenState extends State<CameraScreen>
   bool _prepareCameraDispose = false;
   bool _cameraInitialized = false;
   FlashMode _flashMode = FlashMode.off;
+
+  //in case of iosSimulator, we do not have any camera.
+  late final bool _noCamera = kDebugMode && Platform.isIOS;
 
   late final CameraController _cameraController;
 
@@ -84,28 +91,26 @@ class _CameraScreenState extends State<CameraScreen>
   @override
   void initState() {
     super.initState();
-    initPermissions(); // 내가 만든 함수
+    if (!_noCamera) {
+      initPermissions(); // 내가 만든 함수
+    } else {
+      setState(() {
+        _hadPermission = true;
+      });
+    }
+
     //유저가 applicaton에서 벗어나는지 돌아오는지 알수 있게 한다
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    _cameraController.dispose();
+    if (!_noCamera && _cameraInitialized) {
+      _cameraController.dispose();
+    }
+
     _buttonAnimationController.dispose();
     super.dispose();
-  }
-
-  Future<void> _takePicture() async {
-    if (!_cameraController.value.isInitialized) return;
-    _buttonAnimationController.forward();
-    final image = await _cameraController.takePicture();
-
-    print("Take a picture : $image");
-    _buttonAnimationController.reverse();
-
-    if (!mounted) return;
-    Navigator.of(context).pop(image);
   }
 
   Future<void> _toggleFlashMode() async {
@@ -127,8 +132,9 @@ class _CameraScreenState extends State<CameraScreen>
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (_noCamera) return;
     if (!_hadPermission) return;
-    if (!_cameraController.value.isInitialized) return;
+    if (!_cameraInitialized || !_cameraController.value.isInitialized) return;
 
     if (state == AppLifecycleState.inactive) {
       setState(() {
@@ -140,6 +146,20 @@ class _CameraScreenState extends State<CameraScreen>
       _prepareCameraDispose = false;
       setState(() {});
     }
+  }
+
+  Future<void> _takePicture() async {
+    if (!_noCamera ||
+        !_cameraInitialized ||
+        !_cameraController.value.isInitialized) return;
+    _buttonAnimationController.forward();
+    final image = await _cameraController.takePicture();
+
+    print("Take a picture : $image");
+    _buttonAnimationController.reverse();
+
+    if (!mounted) return;
+    Navigator.of(context).pop(image);
   }
 
   Future<void> _onPickImagePressed() async {
@@ -172,45 +192,49 @@ class _CameraScreenState extends State<CameraScreen>
             ? const DisplayAlertMessage(
                 alertMessage: "Please check camera  permissions!",
               )
-            : !_hadPermission || !_cameraInitialized
+            : !_hadPermission //|| !_cameraInitialized
                 ? const DisplayAlertMessage(alertMessage: "Initializing...")
                 : Stack(
                     alignment: Alignment.center,
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: ClipRRect(
+                      if (!_noCamera && _cameraInitialized)
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: ClipRRect(
                             borderRadius: const BorderRadius.vertical(
                               bottom: Radius.circular(
                                 Sizes.size20,
                               ),
                             ),
-                            child: CameraPreview(_cameraController)),
-                      ),
+                            child: CameraPreview(_cameraController),
+                          ),
+                        ),
                       Positioned(
                         bottom: Sizes.size96,
                         width: MediaQuery.of(context).size.width,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: IconButton(
-                                  onPressed: _toggleFlashMode,
-                                  icon: _flashMode == FlashMode.always
-                                      ? const Icon(
-                                          Icons.flash_on_rounded,
-                                          size: Sizes.size32,
-                                          color: Colors.white,
-                                        )
-                                      : const Icon(
-                                          Icons.flash_off_rounded,
-                                          size: Sizes.size32,
-                                          color: Colors.white,
-                                        ),
+                            if (!_noCamera)
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  child: IconButton(
+                                    onPressed: _toggleFlashMode,
+                                    icon: _flashMode == FlashMode.always
+                                        ? const Icon(
+                                            Icons.flash_on_rounded,
+                                            size: Sizes.size32,
+                                            color: Colors.white,
+                                          )
+                                        : const Icon(
+                                            Icons.flash_off_rounded,
+                                            size: Sizes.size32,
+                                            color: Colors.white,
+                                          ),
+                                  ),
                                 ),
                               ),
-                            ),
                             GestureDetector(
                               onTap: _takePicture,
                               child: ScaleTransition(
@@ -237,18 +261,19 @@ class _CameraScreenState extends State<CameraScreen>
                                 ),
                               ),
                             ),
-                            Expanded(
-                                child: Container(
-                              alignment: Alignment.center,
-                              child: IconButton(
-                                onPressed: _toggleSelfieMode,
-                                icon: const Icon(
-                                  Icons.cameraswitch,
-                                  size: Sizes.size32,
-                                  color: Colors.white,
+                            if (!_noCamera)
+                              Expanded(
+                                  child: Container(
+                                alignment: Alignment.center,
+                                child: IconButton(
+                                  onPressed: _toggleSelfieMode,
+                                  icon: const Icon(
+                                    Icons.cameraswitch,
+                                    size: Sizes.size32,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                            )),
+                              )),
                           ],
                         ),
                       ),
@@ -281,10 +306,10 @@ class _CameraScreenState extends State<CameraScreen>
                     alignment: Alignment.center,
                     child: TextButton(
                       onPressed: _onPickImagePressed,
-                      child: Text(
-                        "Library",
-                        style: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
+                      child: const Opacity(
+                        opacity: 0.7,
+                        child: Text(
+                          "Library",
                         ),
                       ),
                     ),

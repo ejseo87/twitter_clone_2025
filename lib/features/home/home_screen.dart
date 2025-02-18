@@ -8,6 +8,8 @@ import 'package:twitter_clone_2025/features/home/widgets/post_title.dart';
 import 'package:twitter_clone_2025/features/home/widgets/render_floating_button.dart';
 
 class HomeScreen extends StatefulWidget {
+  static String routeUrl = "/";
+  static String routeName = "home";
   const HomeScreen({super.key});
 
   @override
@@ -101,15 +103,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     List<String> urls = [];
                     switch (modIndex) {
                       case 0:
-                        urls.add(_youtubeIds[index % 2]);
+                        //urls.add(_youtubeIds[index % 2]);
+                        urls.add(_images[index]);
                         break;
                       case 1:
                         urls.add(_images[index]);
                         break;
                       case 3:
                         urls.add(_images[index]);
-                        urls.add(_images[index % 5]);
-                        urls.add(_images[index % 10]);
+                        urls.add(_images[index % 2]);
+                        urls.add(_images[index % 3]);
                     }
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -119,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: PostTile(
                         isIdentified: modIndex == 0 ? true : false,
                         threadType: modIndex == 0
-                            ? ThreadType.video
+                            ? ThreadType.image
                             : modIndex == 1
                                 ? ThreadType.image
                                 : modIndex == 2

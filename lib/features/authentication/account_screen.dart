@@ -7,7 +7,7 @@ import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/features/authentication/agreement_screen.dart';
 import 'package:twitter_clone_2025/features/authentication/confirmation_code_screen.dart';
-import 'package:twitter_clone_2025/widgets/form_button.dart';
+import 'package:twitter_clone_2025/common/widgets/form_button.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -311,8 +311,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       textAlign: TextAlign.start,
                       text: TextSpan(
                         text: "By signing up, you agree to the ",
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.6),
+                        style: const TextStyle(
+                          color: Colors.black87,
                           fontSize: Sizes.size16,
                           height: 1.2,
                         ),

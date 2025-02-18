@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/users/widgets/mentioned_thread_tile.dart';
-import 'package:twitter_clone_2025/widgets/reaction_icon_row.dart';
-import 'package:twitter_clone_2025/widgets/utils.dart';
+import 'package:twitter_clone_2025/common/widgets/reaction_icon_row.dart';
+import 'package:twitter_clone_2025/common/widgets/utils.dart';
 
 class UserTreadTile extends StatelessWidget {
   final String postedTime;
@@ -28,6 +28,7 @@ class UserTreadTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = isDartMode(context);
+    final width = MediaQuery.of(context).size.width;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -77,7 +78,7 @@ class UserTreadTile extends StatelessWidget {
             ? Column(
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width - Sizes.size16,
+                    width: width - Sizes.size16,
                     padding: const EdgeInsets.only(
                       top: Sizes.size16,
                       bottom: Sizes.size16,

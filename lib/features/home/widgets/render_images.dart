@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:twitter_clone_2025/contants/breakpoints.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 
 class RenderImages extends StatelessWidget {
@@ -14,11 +15,14 @@ class RenderImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
-        height: 200,
-        width: 310 * urls.length.toDouble(),
+        height: width > Breakpoints.md ? 400 : 200,
+        width: width > Breakpoints.md
+            ? 610 * urls.length.toDouble()
+            : 310 * urls.length.toDouble(),
         child: ListView.separated(
           //shrinkWrap: true,
           scrollDirection: Axis.horizontal,
@@ -30,6 +34,8 @@ class RenderImages extends StatelessWidget {
               child: Image.network(
                 urls[index],
                 fit: BoxFit.cover,
+                height: width > Breakpoints.md ? 400 : 200,
+                width: width > Breakpoints.md ? 600 : 300,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) {
                     return child;

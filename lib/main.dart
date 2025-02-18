@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
-import 'package:twitter_clone_2025/features/main_navigation/main_navigation_screen.dart';
+import 'package:twitter_clone_2025/common/main_navigation_screen.dart';
+import 'package:twitter_clone_2025/router.dart';
 
 /*
 ❯ flutter --version
@@ -19,7 +20,8 @@ class TwitterClone2025 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'TikTok Clone 2025',
       theme: ThemeData(
         brightness: Brightness.light,
@@ -89,7 +91,7 @@ class TwitterClone2025 extends StatelessWidget {
         ),
         useMaterial3: false,
       ),
-      home: const MainNavigationScreen(),
+      //home: const MainNavigationScreen(),
     );
   }
 }

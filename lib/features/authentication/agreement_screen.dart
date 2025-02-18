@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/widgets/form_button.dart';
+import 'package:twitter_clone_2025/common/widgets/form_button.dart';
 
 class AgreementScreen extends StatefulWidget {
   const AgreementScreen({super.key});
@@ -82,8 +81,8 @@ class _AgreementScreenState extends State<AgreementScreen> {
               textAlign: TextAlign.start,
               text: TextSpan(
                 text: "By signing up, you agree to our ",
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.6),
+                style: const TextStyle(
+                  color: Colors.black,
                   fontSize: Sizes.size16,
                   height: 1.2,
                 ),

@@ -1,24 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:twitter_clone_2025/common/widgets/nav_tab.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/features/activity/activity_screen.dart';
 import 'package:twitter_clone_2025/features/home/home_screen.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/nav_tab.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/write_sheet.dart';
+import 'package:twitter_clone_2025/features/write/widgets/write_sheet.dart';
 import 'package:twitter_clone_2025/features/search/search_screen.dart';
 import 'package:twitter_clone_2025/features/users/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  static const String routeName = "mainNavigattion";
+  final String tab;
+  const MainNavigationScreen({
+    super.key,
+    required this.tab,
+  });
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 0;
+  final List<String> _tabs = [
+    "",
+    "search",
+    "xxxx",
+    "activity",
+    "profile",
+  ];
+  late int _selectedIndex = _tabs.indexOf(widget.tab);
 
   void _onTap(int index) {
+    context.go("/${_tabs[index]}");
     setState(() {
       _selectedIndex = index;
     });

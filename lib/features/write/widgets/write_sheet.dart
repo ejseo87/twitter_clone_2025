@@ -3,15 +3,17 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
-import 'package:twitter_clone_2025/features/home/widgets/post_title.dart';
-import 'package:twitter_clone_2025/features/main_navigation/camera_screen.dart';
-import 'package:twitter_clone_2025/widgets/render_avatar_group.dart';
-import 'package:twitter_clone_2025/widgets/render_avatar.dart';
-import 'package:twitter_clone_2025/widgets/utils.dart';
+import 'package:twitter_clone_2025/features/write/camera_screen.dart';
+import 'package:twitter_clone_2025/common/widgets/render_avatar_group.dart';
+import 'package:twitter_clone_2025/common/widgets/render_avatar.dart';
+import 'package:twitter_clone_2025/common/widgets/utils.dart';
 
 class WriteSheet extends StatefulWidget {
+  static const String routeUrl = "/write";
+  static const String routeName = "write";
   final String url;
   final String text;
 

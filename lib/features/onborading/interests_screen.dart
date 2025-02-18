@@ -4,7 +4,7 @@ import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/onborading/detail_interests_screen.dart';
 import 'package:twitter_clone_2025/features/onborading/widgets/selectable_button.dart';
-import 'package:twitter_clone_2025/widgets/form_button.dart';
+import 'package:twitter_clone_2025/common/widgets/form_button.dart';
 
 const interests = [
   "Fashion & beauty",

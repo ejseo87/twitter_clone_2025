@@ -32,7 +32,7 @@ class SelectableInterestTile extends StatelessWidget {
               color: selected ? Theme.of(context).primaryColor : Colors.white,
               borderRadius: BorderRadius.circular(Sizes.size14),
               border: Border.all(
-                color: Colors.black.withOpacity(0.2),
+                color: Colors.grey.shade400,
               ),
             ),
             child: Text(

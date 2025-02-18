@@ -1,17 +1,23 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart' as faker;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:twitter_clone_2025/contants/breakpoints.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/features/settings/settings_screen.dart';
 import 'package:twitter_clone_2025/features/users/widgets/followers_avatar.dart';
 import 'package:twitter_clone_2025/features/users/widgets/persistent_tab_bar.dart';
 import 'package:twitter_clone_2025/features/users/widgets/user_thread_tile.dart';
-import 'package:twitter_clone_2025/widgets/utils.dart';
+import 'package:twitter_clone_2025/common/widgets/utils.dart';
 
 class UserProfileScreen extends StatefulWidget {
+  static String routeUrl = "/profile";
+  static String routeName = "profile";
+
   const UserProfileScreen({super.key});
 
   @override
@@ -47,16 +53,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   void _onGearPressed() {
-    Navigator.of(context).push(
+    /* Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const SettingsScreen(),
       ),
-    );
+    ); */
+    context.pushNamed(SettingsScreen.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = isDartMode(context);
+    final width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: DefaultTabController(
         length: 2,

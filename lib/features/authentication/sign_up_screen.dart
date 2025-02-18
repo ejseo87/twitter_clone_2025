@@ -4,7 +4,7 @@ import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/features/authentication/account_screen.dart';
 import 'package:twitter_clone_2025/features/authentication/login_screen.dart';
-import 'package:twitter_clone_2025/widgets/auth_button.dart';
+import 'package:twitter_clone_2025/common/widgets/auth_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

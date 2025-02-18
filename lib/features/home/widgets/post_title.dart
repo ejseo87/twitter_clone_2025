@@ -1,12 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
+import 'package:twitter_clone_2025/contants/breakpoints.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/home/widgets/render_images.dart';
-import 'package:twitter_clone_2025/features/main_navigation/widgets/action_sheet.dart';
-import 'package:twitter_clone_2025/features/home/widgets/youtube_player.dart';
-import 'package:twitter_clone_2025/widgets/avatars_column.dart';
-import 'package:twitter_clone_2025/widgets/reaction_icon_row.dart';
+import 'package:twitter_clone_2025/features/write/widgets/action_sheet.dart';
+import 'package:twitter_clone_2025/common/widgets/avatars_column.dart';
+import 'package:twitter_clone_2025/common/widgets/reaction_icon_row.dart';
 
 enum ThreadType { image, video, mention }
 
@@ -51,6 +52,7 @@ class PostTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return IntrinsicHeight(
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -132,11 +134,11 @@ class PostTile extends StatelessWidget {
                 Text(
                   mention,
                   textAlign: TextAlign.start,
-                  maxLines: threadType == ThreadType.image ||
+                  maxLines: !kIsWeb && threadType == ThreadType.image ||
                           threadType == ThreadType.video
                       ? 1
                       : null,
-                  overflow: threadType == ThreadType.image ||
+                  overflow: !kIsWeb && threadType == ThreadType.image ||
                           threadType == ThreadType.video
                       ? TextOverflow.ellipsis
                       : TextOverflow.visible,
@@ -145,37 +147,39 @@ class PostTile extends StatelessWidget {
                   ),
                 ),
                 Gaps.v8,
-                threadType == ThreadType.video
-                    ? PostedVideoPlayer(
-                        id: urls![0],
+                threadType == ThreadType.image && urls!.length > 1
+                    ? RenderImages(
+                        urls: urls!,
                       )
-                    : threadType == ThreadType.image && urls!.length > 1
-                        ? RenderImages(
-                            urls: urls!,
-                          )
-                        : threadType == ThreadType.image && urls!.length == 1
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  urls![0],
-                                  fit: BoxFit.cover,
-                                  alignment: Alignment.centerLeft,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return child;
-                                    }
-                                    return const CircularProgressIndicator();
-                                  },
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
-                                    child: const Center(
-                                      child: Text("Image Loading Fail..."),
-                                    ),
+                    : threadType == ThreadType.image && urls!.length == 1
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              urls![0],
+                              fit: BoxFit.cover,
+                              alignment: Alignment.centerLeft,
+                              height: width > Breakpoints.md ? 400 : 200,
+                              width: width > Breakpoints.md ? 600 : 300,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return const CircularProgressIndicator();
+                              },
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                child: const SizedBox(
+                                  width: 300,
+                                  height: 200,
+                                  child: Center(
+                                    child: Text("Image Loading Fail..."),
                                   ),
                                 ),
-                              )
-                            : Container(),
+                              ),
+                            ),
+                          )
+                        : Container(),
                 Gaps.v10,
                 const ReactionIconRow(),
                 Gaps.v20,

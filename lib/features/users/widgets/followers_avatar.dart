@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
-import 'package:twitter_clone_2025/widgets/utils.dart';
+import 'package:twitter_clone_2025/common/widgets/utils.dart';
 
 class FollowersAvatar extends StatelessWidget {
   final List<String> avatars;

@@ -1,10 +1,12 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
+import 'package:twitter_clone_2025/contants/breakpoints.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
-import 'package:twitter_clone_2025/widgets/utils.dart';
+import 'package:twitter_clone_2025/common/widgets/utils.dart';
 
 class MentionedThreadTile extends StatelessWidget {
   final String avatarUrl;
@@ -22,6 +24,7 @@ class MentionedThreadTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = isDartMode(context);
+    final width = MediaQuery.of(context).size.width;
     return Container(
       padding: const EdgeInsets.all(Sizes.size10),
       decoration: BoxDecoration(
@@ -55,10 +58,10 @@ class MentionedThreadTile extends StatelessWidget {
           ),
           Gaps.v10,
           Text(
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.start,
             softWrap: true,
-            maxLines: 5,
-            overflow: TextOverflow.ellipsis,
+            maxLines: kIsWeb ? null : 5,
+            overflow: kIsWeb ? TextOverflow.visible : TextOverflow.ellipsis,
             mention,
             style: const TextStyle(
               fontSize: Sizes.size14,
@@ -71,12 +74,23 @@ class MentionedThreadTile extends StatelessWidget {
               'https://picsum.photos/id/${Random().nextInt(300)}/300/200',
               fit: BoxFit.cover,
               alignment: Alignment.centerLeft,
+              height: width > Breakpoints.md ? 400 : 200,
+              width: width > Breakpoints.md ? 600 : 300,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
                 }
                 return const CircularProgressIndicator();
               },
+              errorBuilder: (context, error, stackTrace) => Container(
+                child: SizedBox(
+                  height: width > Breakpoints.md ? 400 : 200,
+                  width: width > Breakpoints.md ? 600 : 300,
+                  child: const Center(
+                    child: Text("Image Loading Fail..."),
+                  ),
+                ),
+              ),
             ),
           ),
           Gaps.v16,

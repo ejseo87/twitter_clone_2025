@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/settings/privacy_screen.dart';
-import 'package:twitter_clone_2025/widgets/utils.dart';
+import 'package:twitter_clone_2025/common/widgets/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
+  static String routeUrl = "/settings";
+  static String routeName = "settings";
   const SettingsScreen({super.key});
 
   @override
@@ -19,11 +22,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _onPrivacyTap() {
-    Navigator.of(context).push(
+    /* Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const PrivacyScreen(),
       ),
-    );
+    ); */
+    context.pushNamed(PrivacyScreen.routeName);
   }
 
   @override
