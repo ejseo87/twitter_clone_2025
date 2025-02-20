@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -29,7 +31,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     "activity",
     "profile",
   ];
-  late int _selectedIndex = _tabs.indexOf(widget.tab);
+  late int _selectedIndex = max(_tabs.indexOf(widget.tab), 0);
+
+  void _indexCheck() {
+    if (_selectedIndex != _tabs.indexOf(widget.tab)) {
+      _selectedIndex = max(_tabs.indexOf(widget.tab), 0);
+      setState(() {});
+    }
+  }
 
   void _onTap(int index) {
     context.go("/${_tabs[index]}");
@@ -55,6 +64,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _indexCheck();
+    print(
+        "_selectedIndex = $_selectedIndex, _tabs.indexOf(widget.tab) = ${_tabs.indexOf(widget.tab)}");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(
