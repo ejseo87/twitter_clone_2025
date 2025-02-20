@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:twitter_clone_2025/features/activity/activity_screen.dart';
-import 'package:twitter_clone_2025/features/home/home_screen.dart';
-import 'package:twitter_clone_2025/common/main_navigation_screen.dart';
-import 'package:twitter_clone_2025/features/search/search_screen.dart';
-import 'package:twitter_clone_2025/features/settings/privacy_screen.dart';
-import 'package:twitter_clone_2025/features/settings/settings_screen.dart';
-import 'package:twitter_clone_2025/features/users/user_profile_screen.dart';
-import 'package:twitter_clone_2025/features/write/camera_screen.dart';
-import 'package:twitter_clone_2025/features/write/widgets/write_sheet.dart';
+import 'package:twitter_clone_2025/views/common/main_navigation_screen.dart';
+import 'package:twitter_clone_2025/views/features/settings/privacy_screen.dart';
+import 'package:twitter_clone_2025/views/features/settings/settings_screen.dart';
+import 'package:twitter_clone_2025/views/features/write/widgets/write_sheet.dart';
 
 final router = GoRouter(
   initialLocation: "/",

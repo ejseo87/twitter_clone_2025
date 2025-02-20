@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
-import 'package:twitter_clone_2025/common/main_navigation_screen.dart';
+import 'package:twitter_clone_2025/repos/settings_repo.dart';
 import 'package:twitter_clone_2025/router.dart';
+import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 
 /*
 ❯ flutter --version
@@ -11,8 +14,22 @@ Engine • revision b8800d88be
 Tools • Dart 3.5.0 • DevTools 2.37.2
 */
 //https://imgur.com/Lr5lksD
-void main() {
-  runApp(const TwitterClone2025());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final preferences = await SharedPreferences.getInstance();
+  final repository = SettingsRepository(preferences);
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => SettingsViewModel(repository),
+        ),
+      ],
+      child: const TwitterClone2025(),
+    ),
+  );
 }
 
 class TwitterClone2025 extends StatelessWidget {
@@ -20,9 +37,11 @@ class TwitterClone2025 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDark = context.watch<SettingsViewModel>().darkmode;
     return MaterialApp.router(
       routerConfig: router,
       title: 'TikTok Clone 2025',
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
         brightness: Brightness.light,
         textTheme: Typography.blackMountainView,
