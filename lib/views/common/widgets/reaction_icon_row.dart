@@ -10,28 +10,27 @@ class ReactionIconRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 150,
-      child: Opacity(
+    return Container(
+      child: const Opacity(
         opacity: 0.6,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             FaIcon(
               FontAwesomeIcons.heart,
               size: Sizes.size20,
             ),
-            Gaps.h16,
+            Gaps.h24,
             FaIcon(
               FontAwesomeIcons.message,
               size: Sizes.size20,
             ),
-            Gaps.h16,
+            Gaps.h24,
             FaIcon(
               FontAwesomeIcons.arrowsRotate,
               size: Sizes.size20,
             ),
-            Gaps.h16,
+            Gaps.h24,
             FaIcon(
               FontAwesomeIcons.paperPlane,
               size: Sizes.size20,

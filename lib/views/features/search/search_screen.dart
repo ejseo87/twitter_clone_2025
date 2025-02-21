@@ -3,24 +3,24 @@ import 'dart:math';
 import 'package:faker/faker.dart' as faker;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 import 'package:twitter_clone_2025/views/common/widgets/render_avatar.dart';
 
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends ConsumerStatefulWidget {
   static String routeUrl = "/search";
   static String routeName = "search";
   const SearchScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  SearchScreenState createState() => SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class SearchScreenState extends ConsumerState<SearchScreen> {
   final _fakeData = faker.Faker();
   final List<String> images = [];
   final List<String> discriptions = [];
@@ -63,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.read<SettingsViewModel>().darkmode;
+    final isDark = ref.watch(settingsProvider).darkmode;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

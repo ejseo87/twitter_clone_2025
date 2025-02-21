@@ -1,19 +1,26 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone_2025/models/settings_model.dart';
 import 'package:twitter_clone_2025/repos/settings_repo.dart';
 
-class SettingsViewModel extends ChangeNotifier {
+class SettingsViewModel extends Notifier<SettingsModel> {
   final SettingsRepository _repository;
   SettingsViewModel(this._repository);
 
-  late final SettingsModel _model = SettingsModel(
-    darkmode: _repository.isDarkmode(),
-  );
-
-  bool get darkmode => _model.darkmode;
   void setDarkmode(bool value) {
     _repository.setDarkmode(value);
-    _model.darkmode = value;
-    notifyListeners();
+    state = SettingsModel(
+      darkmode: value,
+    );
+  }
+
+  @override
+  SettingsModel build() {
+    return SettingsModel(
+      darkmode: _repository.isDarkmode(),
+    );
   }
 }
+
+final settingsProvider = NotifierProvider<SettingsViewModel, SettingsModel>(
+  () => throw UnimplementedError(),
+);

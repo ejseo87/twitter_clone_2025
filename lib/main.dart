@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/repos/settings_repo.dart';
@@ -12,7 +12,13 @@ Flutter 3.24.0 • channel stable • https://github.com/flutter/flutter.git
 Framework • revision 80c2e84975 (6 months ago) • 2024-07-30 23:06:49 +0700
 Engine • revision b8800d88be
 Tools • Dart 3.5.0 • DevTools 2.37.2
+❯ flutter --version
+Flutter 3.29.0 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision 35c388afb5 (7 days ago) • 2025-02-10 12:48:41 -0800
+Engine • revision f73bfc4522
+Tools • Dart 3.7.0 • DevTools 2.42.2
 */
+
 //https://imgur.com/Lr5lksD
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +27,10 @@ void main() async {
   final repository = SettingsRepository(preferences);
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => SettingsViewModel(repository),
+    ProviderScope(
+      overrides: [
+        settingsProvider.overrideWith(
+          () => SettingsViewModel(repository),
         ),
       ],
       child: const TwitterClone2025(),
@@ -32,16 +38,17 @@ void main() async {
   );
 }
 
-class TwitterClone2025 extends StatelessWidget {
+class TwitterClone2025 extends ConsumerWidget {
   const TwitterClone2025({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final bool isDark = context.watch<SettingsViewModel>().darkmode;
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
       routerConfig: router,
       title: 'TikTok Clone 2025',
-      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ref.watch(settingsProvider).darkmode
+          ? ThemeMode.dark
+          : ThemeMode.light,
       theme: ThemeData(
         brightness: Brightness.light,
         textTheme: Typography.blackMountainView,

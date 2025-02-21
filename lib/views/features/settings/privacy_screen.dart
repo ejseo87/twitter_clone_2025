@@ -1,42 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 
-class PrivacyScreen extends StatefulWidget {
+class PrivacyScreen extends ConsumerWidget {
   static String routeUrl = "privacy";
   static String routeName = "privacy";
   const PrivacyScreen({super.key});
 
-  @override
-  State<PrivacyScreen> createState() => _PrivacyScreenState();
-}
-
-class _PrivacyScreenState extends State<PrivacyScreen> {
-  bool _notificaions = false;
-
-  void _onNotificationChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notificaions = newValue;
-    });
-  }
-
-  void _onBackPressed() {
+  void _onBackPressed(BuildContext context) {
     Navigator.of(context).pop();
   }
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = context.read<SettingsViewModel>().darkmode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(settingsProvider).darkmode;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.5,
         leadingWidth: 100,
         leading: TextButton(
-          onPressed: _onBackPressed,
+          onPressed: () => _onBackPressed(context),
           child: Row(
             children: [
               FaIcon(
@@ -60,8 +46,8 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            value: _notificaions,
-            onChanged: _onNotificationChanged,
+            value: false,
+            onChanged: (value) {},
             title: const Row(
               children: [
                 FaIcon(

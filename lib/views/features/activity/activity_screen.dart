@@ -1,10 +1,9 @@
 import 'dart:math';
-
 import 'package:faker/faker.dart' as faker;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
@@ -19,16 +18,16 @@ List<String> tabs = [
   "Followings",
 ];
 
-class ActivityScreen extends StatefulWidget {
+class ActivityScreen extends ConsumerStatefulWidget {
   static String routeUrl = "/activity";
   static String routeName = "acitivity";
   const ActivityScreen({super.key});
 
   @override
-  State<ActivityScreen> createState() => _ActivityScreenState();
+  ActivityScreenState createState() => ActivityScreenState();
 }
 
-class _ActivityScreenState extends State<ActivityScreen> {
+class ActivityScreenState extends ConsumerState<ActivityScreen> {
   final _fakeData = faker.Faker();
   final int itemCount = 10;
   List<String> items = [];
@@ -122,7 +121,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.watch<SettingsViewModel>().darkmode;
+    final isDark = ref.watch(settingsProvider).darkmode;
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(

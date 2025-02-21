@@ -2,21 +2,22 @@ import 'dart:math';
 
 import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/views/features/home/widgets/post_title.dart';
 import 'package:twitter_clone_2025/views/features/home/widgets/render_floating_button.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   static String routeUrl = "/";
   static String routeName = "home";
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends ConsumerState<HomeScreen> {
   late ScrollController _scrollController;
   bool _showFloatingButton = false;
 

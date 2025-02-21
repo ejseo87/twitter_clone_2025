@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
@@ -11,7 +11,7 @@ import 'package:twitter_clone_2025/views/features/write/camera_screen.dart';
 import 'package:twitter_clone_2025/views/common/widgets/render_avatar_group.dart';
 import 'package:twitter_clone_2025/views/common/widgets/render_avatar.dart';
 
-class WriteSheet extends StatefulWidget {
+class WriteSheet extends ConsumerStatefulWidget {
   static const String routeUrl = "/write";
   static const String routeName = "write";
   final String url;
@@ -24,12 +24,12 @@ class WriteSheet extends StatefulWidget {
   });
 
   @override
-  State<WriteSheet> createState() => _WriteSheetState();
+  WriteSheetState createState() => WriteSheetState();
 }
 
-class _WriteSheetState extends State<WriteSheet> {
+class WriteSheetState extends ConsumerState<WriteSheet> {
   bool _isAnyInput = false;
-  final bool _getImage = false;
+  //final bool _getImage = false;
   XFile? _image;
 
   void _onTapHideKeyboard() {
@@ -60,7 +60,7 @@ class _WriteSheetState extends State<WriteSheet> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isDark = context.read<SettingsViewModel>().darkmode;
+    final isDark = ref.watch(settingsProvider).darkmode;
     return Container(
       height: size.height * 0.9,
       clipBehavior: Clip.hardEdge,

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
@@ -19,7 +19,7 @@ List<String> reportItemList = [
   "Nudity or sexual activity",
 ];
 
-class ReportSheet extends StatelessWidget {
+class ReportSheet extends ConsumerWidget {
   ReportSheet({super.key});
 
   final double _dividerThickness = 0.5;
@@ -65,9 +65,9 @@ class ReportSheet extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
-    final isDark = context.read<SettingsViewModel>().darkmode;
+    final isDark = ref.watch(settingsProvider).darkmode;
     return Container(
       height: size.height * 0.75,
       clipBehavior: Clip.hardEdge,

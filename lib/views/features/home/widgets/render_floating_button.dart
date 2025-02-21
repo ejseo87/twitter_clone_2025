@@ -2,21 +2,21 @@ import 'dart:math';
 
 import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 import 'package:twitter_clone_2025/views/common/widgets/render_avatar.dart';
 import 'package:twitter_clone_2025/views/common/widgets/utils.dart';
 
-class RenderFloatingButton extends StatelessWidget {
+class RenderFloatingButton extends ConsumerWidget {
   RenderFloatingButton({super.key});
   final double _gap = 3;
   final double _radius = 26;
   final _fakeData = faker.Faker();
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = context.read<SettingsViewModel>().darkmode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(settingsProvider).darkmode;
     return Container(
       width: 138,
       height: _radius + _gap * 6,

@@ -1,45 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 import 'package:twitter_clone_2025/views/features/settings/privacy_screen.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   static String routeUrl = "/settings";
   static String routeName = "settings";
   const SettingsScreen({super.key});
 
-  @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  void _onBackPressed() {
+  void _onBackPressed(BuildContext context) {
     Navigator.of(context).pop();
   }
 
-  void _onPrivacyTap() {
-    /* Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const PrivacyScreen(),
-      ),
-    ); */
+  void _onPrivacyTap(BuildContext context) {
     context.pushNamed(PrivacyScreen.routeName);
   }
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = context.read<SettingsViewModel>().darkmode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(settingsProvider).darkmode;
     return Scaffold(
       appBar: AppBar(
         elevation: 0.5,
         leadingWidth: 100,
         leading: TextButton(
-          onPressed: _onBackPressed,
+          onPressed: () => _onBackPressed(context),
           child: Row(
             children: [
               FaIcon(
@@ -63,10 +53,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            value: context.watch<SettingsViewModel>().darkmode,
-            onChanged: (value) {
-              context.read<SettingsViewModel>().setDarkmode(value);
-            },
+            value: isDark,
+            onChanged: (value) =>
+                ref.read(settingsProvider.notifier).setDarkmode(value),
             title: const Text("Dark Mode"),
             subtitle: const Text("Light mode by default"),
           ),
@@ -87,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: Text("Notifications"),
           ),
           ListTile(
-            onTap: _onPrivacyTap,
+            onTap: () => _onPrivacyTap(context),
             minLeadingWidth: 20,
             leading: const FaIcon(
               FontAwesomeIcons.lock,

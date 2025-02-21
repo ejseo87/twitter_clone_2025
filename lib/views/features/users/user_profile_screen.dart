@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:faker/faker.dart' as faker;
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
@@ -13,17 +13,17 @@ import 'package:twitter_clone_2025/views/features/users/widgets/followers_avatar
 import 'package:twitter_clone_2025/views/features/users/widgets/persistent_tab_bar.dart';
 import 'package:twitter_clone_2025/views/features/users/widgets/user_thread_tile.dart';
 
-class UserProfileScreen extends StatefulWidget {
+class UserProfileScreen extends ConsumerStatefulWidget {
   static String routeUrl = "/profile";
   static String routeName = "profile";
 
   const UserProfileScreen({super.key});
 
   @override
-  State<UserProfileScreen> createState() => _UserProfileScreenState();
+  UserProfileScreenState createState() => UserProfileScreenState();
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   final List<String> _listOfAvtars = [
     "https://picsum.photos/id/60/200/300",
     "https://picsum.photos/id/83/200/300",
@@ -62,15 +62,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.read<SettingsViewModel>().darkmode;
-    final width = MediaQuery.of(context).size.width;
+    final isDark = ref.watch(settingsProvider).darkmode;
     return SafeArea(
       child: DefaultTabController(
         length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
-              backgroundColor: isDark ? Colors.black : Colors.white,
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               elevation: 1,
               leading: IconButton(
                 onPressed: () {},
@@ -100,6 +99,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               child: Column(
                 children: [
                   ListTile(
+                    isThreeLine: true,
+                    tileColor: Theme.of(context).appBarTheme.backgroundColor,
                     title: const Text(
                       "Alice",
                       style: TextStyle(
@@ -144,26 +145,37 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           NetworkImage("https://picsum.photos/id/81/200/300"),
                     ),
                   ),
-                  Gaps.v10,
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Sizes.size16),
-                    child: Text(
+                  Container(
+                    color: Theme.of(context).appBarTheme.backgroundColor,
+                    padding: const EdgeInsets.only(
+                      top: Sizes.size10,
+                      bottom: Sizes.size20,
+                      left: Sizes.size16,
+                      right: Sizes.size16,
+                    ),
+                    child: const Text(
                       "It’s no use going back to yesterday, because I was a different person then.",
                       style: TextStyle(
                         fontSize: Sizes.size14,
                       ),
                     ),
                   ),
-                  Gaps.v20,
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: Sizes.size16),
+                  Container(
+                    color: Theme.of(context).appBarTheme.backgroundColor,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Sizes.size16,
+                      vertical: Sizes.size20,
+                    ),
                     child: FollowersAvatar(avatars: _listOfAvtars),
                   ),
-                  Gaps.v20,
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: Sizes.size16),
+                  Container(
+                    color: Theme.of(context).appBarTheme.backgroundColor,
+                    padding: const EdgeInsets.only(
+                      left: Sizes.size16,
+                      right: Sizes.size16,
+                      top: Sizes.size10,
+                      bottom: Sizes.size20,
+                    ),
                     child: Row(
                       children: [
                         Expanded(
@@ -216,7 +228,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ],
                     ),
                   ),
-                  Gaps.v20,
                 ],
               ),
             ),
@@ -227,35 +238,41 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           ],
           body: TabBarView(
             children: [
-              ListView.separated(
-                itemBuilder: (context, index) => UserTreadTile(
-                  postedTime: _postedTime[index],
-                  mention: _mention[index],
-                  mentionedAvatar: _mentionedAvatar[index],
-                  mentionedUsername: _mentionedUsername[index],
-                  mentionedMention: _mentionedMention[index],
-                  mentionedReplies: _mentionedReplies[index],
-                  mentioned: index % 2 == 1,
+              Container(
+                color: Theme.of(context).appBarTheme.backgroundColor,
+                child: ListView.separated(
+                  itemBuilder: (context, index) => UserTreadTile(
+                    postedTime: _postedTime[index],
+                    mention: _mention[index],
+                    mentionedAvatar: _mentionedAvatar[index],
+                    mentionedUsername: _mentionedUsername[index],
+                    mentionedMention: _mentionedMention[index],
+                    mentionedReplies: _mentionedReplies[index],
+                    mentioned: index % 2 == 1,
+                  ),
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.grey.shade200,
+                  ),
+                  itemCount: _itemCount,
                 ),
-                separatorBuilder: (context, index) => Divider(
-                  color: isDark ? Colors.grey.shade200 : Colors.grey.shade300,
-                ),
-                itemCount: _itemCount,
               ),
-              ListView.separated(
-                itemBuilder: (context, index) => UserTreadTile(
-                  postedTime: _postedTime[index],
-                  mention: _mention[index],
-                  mentionedAvatar: _mentionedAvatar[index],
-                  mentionedUsername: _mentionedUsername[index],
-                  mentionedMention: _mentionedMention[index],
-                  mentionedReplies: _mentionedReplies[index],
-                  mentioned: index % 2 == 1,
+              Container(
+                color: Theme.of(context).appBarTheme.backgroundColor,
+                child: ListView.separated(
+                  itemBuilder: (context, index) => UserTreadTile(
+                    postedTime: _postedTime[index],
+                    mention: _mention[index],
+                    mentionedAvatar: _mentionedAvatar[index],
+                    mentionedUsername: _mentionedUsername[index],
+                    mentionedMention: _mentionedMention[index],
+                    mentionedReplies: _mentionedReplies[index],
+                    mentioned: index % 2 == 1,
+                  ),
+                  separatorBuilder: (context, index) => Divider(
+                    color: isDark ? Colors.grey.shade500 : Colors.grey.shade300,
+                  ),
+                  itemCount: _itemCount,
                 ),
-                separatorBuilder: (context, index) => Divider(
-                  color: isDark ? Colors.grey.shade500 : Colors.grey.shade300,
-                ),
-                itemCount: _itemCount,
               ),
             ],
           ),

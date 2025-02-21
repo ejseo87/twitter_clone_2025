@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 import 'package:twitter_clone_2025/views/features/write/widgets/report_sheet.dart';
 
-class ActionSheet extends StatefulWidget {
+class ActionSheet extends ConsumerStatefulWidget {
   const ActionSheet({super.key});
 
   @override
-  State<ActionSheet> createState() => _ActionSheetState();
+  ActionSheetState createState() => ActionSheetState();
 }
 
-class _ActionSheetState extends State<ActionSheet> {
+class ActionSheetState extends ConsumerState<ActionSheet> {
   bool _reportSelected = false;
 
   void _onReportSheet(BuildContext context) async {
@@ -30,7 +30,7 @@ class _ActionSheetState extends State<ActionSheet> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final isDark = context.read<SettingsViewModel>().darkmode;
+    final isDark = ref.watch(settingsProvider).darkmode;
     return Container(
       height: size.height * 0.4,
       clipBehavior: Clip.hardEdge,

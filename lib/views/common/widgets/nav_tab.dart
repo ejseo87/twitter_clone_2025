@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 
-class NavTab extends StatelessWidget {
+class NavTab extends ConsumerWidget {
   final IconData icon;
   final IconData selectedIcon;
   final String text;
@@ -20,8 +20,8 @@ class NavTab extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final bool isDark = context.read<SettingsViewModel>().darkmode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isDark = ref.watch(settingsProvider).darkmode;
     return Expanded(
       child: GestureDetector(
         onTap: () => onTap(),

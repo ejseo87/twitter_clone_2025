@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/view_models/settings_vm.dart';
 
-class FollowersAvatar extends StatelessWidget {
+class FollowersAvatar extends ConsumerWidget {
   final List<String> avatars;
   const FollowersAvatar({
     super.key,
@@ -14,8 +14,8 @@ class FollowersAvatar extends StatelessWidget {
   final double _borderWidth = 3;
 
   @override
-  Widget build(BuildContext context) {
-    final isDark = context.read<SettingsViewModel>().darkmode;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(settingsProvider).darkmode;
     return SizedBox(
       height: _radius + _borderWidth * 2,
       width: MediaQuery.of(context)
