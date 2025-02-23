@@ -1,10 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
-import 'package:twitter_clone_2025/repos/settings_repo.dart';
+import 'package:twitter_clone_2025/features/settings/repos/settings_repo.dart';
+import 'package:twitter_clone_2025/firebase_options.dart';
 import 'package:twitter_clone_2025/router.dart';
-import 'package:twitter_clone_2025/view_models/settings_vm.dart';
+import 'package:twitter_clone_2025/features/settings/view_models/settings_vm.dart';
 
 /*
 ❯ flutter --version
@@ -21,7 +23,15 @@ Tools • Dart 3.7.0 • DevTools 2.42.2
 
 //https://imgur.com/Lr5lksD
 void main() async {
+  //go_router 최신버전 사용 시 선언
+  //GoRouter.optionURLReflectsImperativeAPIs = true;
+  //아래라인 없면 rendering 안되니 꼭 있어야함.
   WidgetsFlutterBinding.ensureInitialized();
+
+  //firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   final preferences = await SharedPreferences.getInstance();
   final repository = SettingsRepository(preferences);
@@ -44,8 +54,8 @@ class TwitterClone2025 extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      routerConfig: router,
-      title: 'TikTok Clone 2025',
+      routerConfig: ref.watch(routerPrivider),
+      title: 'Thread Clone 2025',
       themeMode: ref.watch(settingsProvider).darkmode
           ? ThemeMode.dark
           : ThemeMode.light,
