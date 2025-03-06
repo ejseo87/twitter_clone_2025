@@ -22,3 +22,19 @@ void showFirebaseErrorSnack({
     ),
   );
 }
+
+String makeDateTimeDifference(int createdAt) {
+  final createdDateTime = DateTime.fromMillisecondsSinceEpoch(createdAt);
+  final currentDateTime = DateTime.now();
+  final diffMins = currentDateTime.difference(createdDateTime).inMinutes;
+  final diffHours = currentDateTime.difference(createdDateTime).inHours;
+  final diffDays = currentDateTime.difference(createdDateTime).inDays;
+
+  if (diffMins < 60) {
+    return "${diffMins}m";
+  } else if (diffMins > 59 && diffMins < 1440) {
+    return "${diffHours}h";
+  } else {
+    return "${diffDays}d";
+  }
+}

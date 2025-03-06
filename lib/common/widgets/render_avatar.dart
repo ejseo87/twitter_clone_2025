@@ -17,7 +17,7 @@ class RenderAvatar extends StatelessWidget {
     return CircleAvatar(
       radius: radius,
       backgroundColor: Theme.of(context).primaryColor,
-      foregroundImage: NetworkImage(url),
+      foregroundImage: url != "" ? NetworkImage(url) : null,
       child: Text(
         text,
         style: const TextStyle(

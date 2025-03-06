@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -165,16 +166,14 @@ class _CameraScreenState extends State<CameraScreen>
   }
 
   Future<void> _onPickImagePressed() async {
-    final image = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-    );
+    final List<XFile> images = await ImagePicker().pickMultiImage();
 
     //whetn user did not pick anything, do nothing.
-    if (image == null) return;
+    if (images.isEmpty) return;
 
     if (!mounted) return;
 
-    Navigator.of(context).pop(image);
+    Navigator.of(context).pop(images);
   }
 
   @override

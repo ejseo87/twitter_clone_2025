@@ -6,10 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:twitter_clone_2025/common/main_navigation/widgets/nav_tab.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/features/activity/activity_screen.dart';
-import 'package:twitter_clone_2025/features/home/home_screen.dart';
-import 'package:twitter_clone_2025/features/write/widgets/write_sheet.dart';
+import 'package:twitter_clone_2025/features/home/views/home_screen.dart';
+import 'package:twitter_clone_2025/features/write/views/widgets/write_sheet.dart';
 import 'package:twitter_clone_2025/features/search/search_screen.dart';
-import 'package:twitter_clone_2025/features/users/user_profile_screen.dart';
+import 'package:twitter_clone_2025/features/users/views/user_profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   static const String routeName = "mainNavigattion";
@@ -25,7 +25,7 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final List<String> _tabs = [
-    "",
+    "home",
     "search",
     "xxxx",
     "activity",
@@ -65,8 +65,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   Widget build(BuildContext context) {
     _indexCheck();
-    print(
-        "_selectedIndex = $_selectedIndex, _tabs.indexOf(widget.tab) = ${_tabs.indexOf(widget.tab)}");
+/*     print(
+        "_selectedIndex = $_selectedIndex, _tabs.indexOf(widget.tab) = ${_tabs.indexOf(widget.tab)}"); */
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Stack(

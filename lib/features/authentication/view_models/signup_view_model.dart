@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:twitter_clone_2025/features/authentication/repos/authentication_repository.dart';
+import 'package:twitter_clone_2025/features/users/view_models/users_view_model.dart';
 import 'package:twitter_clone_2025/utils.dart';
 
 // There is no data exposed.
@@ -10,6 +12,7 @@ import 'package:twitter_clone_2025/utils.dart';
 //view model just shows loading screen and triggers the process of account creation
 class SignupViewModel extends AsyncNotifier<void> {
   late final AuthenticationRepository _authRepo;
+
   @override
   FutureOr<void> build() {
     _authRepo = ref.read(authRepo);
@@ -17,12 +20,18 @@ class SignupViewModel extends AsyncNotifier<void> {
 
   Future<void> emailSignUp(BuildContext context) async {
     state = const AsyncValue.loading();
+    final users = ref.read(usersProvider.notifier);
     final form = ref.read(signUpForm);
+
     state = await AsyncValue.guard(
-      () async => await _authRepo.emailSignUp(
-        form["email"],
-        form["password"],
-      ),
+      () async {
+        final UserCredential userCredential = await _authRepo.emailSignUp(
+          form["email"],
+          form["password"],
+        );
+        print("emailSignUp() userCredential = $userCredential");
+        await users.createProfile(userCredential);
+      },
     );
     if (state.hasError) {
       showFirebaseErrorSnack(

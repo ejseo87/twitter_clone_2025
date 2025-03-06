@@ -7,7 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/features/settings/view_models/settings_vm.dart';
-import 'package:twitter_clone_2025/features/write/camera_screen.dart';
+import 'package:twitter_clone_2025/features/write/view_models/upload_thread_view_model.dart';
+import 'package:twitter_clone_2025/features/write/views/camera_screen.dart';
 import 'package:twitter_clone_2025/common/widgets/render_avatar_group.dart';
 import 'package:twitter_clone_2025/common/widgets/render_avatar.dart';
 
@@ -28,9 +29,28 @@ class WriteSheet extends ConsumerStatefulWidget {
 }
 
 class WriteSheetState extends ConsumerState<WriteSheet> {
-  bool _isAnyInput = false;
+  final TextEditingController _textController = TextEditingController();
+
+  //final bool _isAnyInput = false;
   //final bool _getImage = false;
-  XFile? _image;
+  List<XFile>? _images;
+  String _text = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _textController.addListener(() {
+      setState(() {
+        _text = _textController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 
   void _onTapHideKeyboard() {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -41,18 +61,23 @@ class WriteSheetState extends ConsumerState<WriteSheet> {
   }
 
   void _onPost(BuildContext context) {
-    Navigator.of(context).pop();
+    print("_text = $_text");
+    ref.read(uploadThreadProvider.notifier).uploadThread(
+          context: context,
+          text: _text,
+          files: _images?.map((image) => File(image.path)).toList(),
+        );
   }
 
   Future<void> _onCameraTap() async {
-    final XFile? image = await Navigator.of(context).push(
+    final List<XFile>? images = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => const CameraScreen(),
       ),
     );
-    if (image != null) {
-      print("Xfile image = $image");
-      _image = image;
+    if (images != null) {
+      print("Xfile image = $images");
+      _images = images;
       setState(() {});
     }
   }
@@ -70,7 +95,7 @@ class WriteSheetState extends ConsumerState<WriteSheet> {
       child: GestureDetector(
         onTap: _onTapHideKeyboard,
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           backgroundColor: isDark ? Colors.grey.shade900 : Colors.white,
           appBar: AppBar(
             title: const Text(
@@ -159,18 +184,7 @@ class WriteSheetState extends ConsumerState<WriteSheet> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.12,
                                 child: TextField(
-                                  onChanged: (value) {
-                                    if (value.isNotEmpty) {
-                                      setState(() {
-                                        _isAnyInput = true;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _isAnyInput = false;
-                                      });
-                                    }
-                                  },
-                                  //expands: true,
+                                  controller: _textController,
                                   maxLines: null,
                                   minLines: null,
                                   textInputAction: TextInputAction.newline,
@@ -186,7 +200,7 @@ class WriteSheetState extends ConsumerState<WriteSheet> {
                                 ),
                               ),
                               Gaps.v10,
-                              _image == null
+                              _images == null
                                   ? GestureDetector(
                                       onTap: _onCameraTap,
                                       child: FaIcon(
@@ -199,15 +213,29 @@ class WriteSheetState extends ConsumerState<WriteSheet> {
                                     )
                                   : Stack(
                                       children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            Sizes.size10,
-                                          ),
-                                          child: Image.file(
-                                            File(_image!.path),
-                                            fit: BoxFit.cover,
-                                            width: 300,
-                                            height: 200,
+                                        SizedBox(
+                                          height: 200,
+                                          child: ListView.separated(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: _images!.length,
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const SizedBox(
+                                              width: Sizes.size8,
+                                            ),
+                                            itemBuilder: (BuildContext context,
+                                                    int index) =>
+                                                ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Sizes.size10),
+                                              child: Image.file(
+                                                File(_images![index].path),
+                                                fit: BoxFit.cover,
+                                                width: 300,
+                                                height: 200,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                         Positioned(
@@ -215,7 +243,7 @@ class WriteSheetState extends ConsumerState<WriteSheet> {
                                           right: Sizes.size10,
                                           child: IconButton(
                                             onPressed: () => setState(() {
-                                              _image = null;
+                                              _images = null;
                                             }),
                                             icon: const FaIcon(
                                               FontAwesomeIcons.xmark,
@@ -257,7 +285,8 @@ class WriteSheetState extends ConsumerState<WriteSheet> {
                         ),
                       ),
                       TextButton(
-                        onPressed: _isAnyInput ? () => _onPost(context) : null,
+                        onPressed:
+                            _text.isNotEmpty ? () => _onPost(context) : null,
                         child: const Text(
                           "Post",
                           style: TextStyle(

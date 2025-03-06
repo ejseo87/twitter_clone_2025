@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone_2025/contants/Sizes.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 
-import 'package:twitter_clone_2025/features/users/widgets/mentioned_thread_tile.dart';
+import 'package:twitter_clone_2025/features/users/views/widgets/mentioned_thread_tile.dart';
 import 'package:twitter_clone_2025/common/widgets/reaction_icon_row.dart';
 
 class UserTreadTile extends StatelessWidget {

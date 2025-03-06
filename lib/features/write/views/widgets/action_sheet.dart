@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone_2025/contants/gaps.dart';
 import 'package:twitter_clone_2025/contants/sizes.dart';
 import 'package:twitter_clone_2025/features/settings/view_models/settings_vm.dart';
-import 'package:twitter_clone_2025/features/write/widgets/report_sheet.dart';
+import 'package:twitter_clone_2025/features/write/views/widgets/report_sheet.dart';
 
 class ActionSheet extends ConsumerStatefulWidget {
   const ActionSheet({super.key});

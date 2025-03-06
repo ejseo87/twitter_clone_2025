@@ -7,7 +7,7 @@ import 'package:twitter_clone_2025/features/authentication/views/sign_up_screen.
 import 'package:twitter_clone_2025/features/authentication/views/login_screen.dart';
 import 'package:twitter_clone_2025/features/settings/views/privacy_screen.dart';
 import 'package:twitter_clone_2025/features/settings/views/settings_screen.dart';
-import 'package:twitter_clone_2025/features/write/widgets/write_sheet.dart';
+import 'package:twitter_clone_2025/features/write/views/widgets/write_sheet.dart';
 
 final routerPrivider = Provider(
   (ref) {

@@ -20,36 +20,36 @@ class RenderAvatarGroup extends StatelessWidget {
       child: SizedBox(
         child: Stack(
           children: [
-            avatars.isNotEmpty
-                ? Positioned(
+            replies > 3
+                ? const Positioned(
                     top: 8,
                     right: 5,
                     child: RenderAvatar(
                       radius: 12,
-                      url: avatars[0],
-                      text: texts[0],
+                      url: "",
+                      text: "Anon",
                     ),
                   )
                 : Container(),
             avatars.length > 1
-                ? Positioned(
+                ? const Positioned(
                     bottom: 12,
                     left: 5,
                     child: RenderAvatar(
                       radius: 9,
-                      url: avatars[1],
-                      text: texts[1],
+                      url: "",
+                      text: "Anon",
                     ),
                   )
                 : Container(),
             avatars.length > 2
-                ? Positioned(
+                ? const Positioned(
                     bottom: 2,
                     right: 17,
                     child: RenderAvatar(
                       radius: 6,
-                      url: avatars[2],
-                      text: texts[2],
+                      url: "",
+                      text: "Anon",
                     ),
                   )
                 : Container(),
